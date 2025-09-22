@@ -1,9 +1,12 @@
 """协会/商会相关 API 路由。"""
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.concurrency import run_in_threadpool
+from typing import Optional, List
 from AssocChamber import ACFICPolicyCrawler, CFLPNewsCrawler, ChinaISACrawler
 from AssocChamber.chinaisa_crawler import CHINAISA_COLUMNS
 from model import NewsResponse, News
+from model.enums import ACFICChannel, CFLPChannel
+from api.param_parsers import parse_multi_select
 
 
 assoc_chamber_router = APIRouter()
@@ -16,16 +19,17 @@ assoc_chamber_router = APIRouter()
     description="抓取 中央/部委/地方/全联/解读 的政策信息，并统一为 NewsResponse",
     responses={
         200: {"description": "成功"},
+        400: {"description": "请求参数不合法"},
         500: {"description": "抓取失败"},
     },
 )
 async def get_acfic_policies(
-    channels: str = Query(default='zy,bw,df,qggsl,jd', description='频道 CSV: zy,bw,df,qggsl,jd'),
+    channels_raw: Optional[List[str]] = Query(None, alias='channels', description='支持 CSV 与重复参数；可选 zy bw df qggsl jd'),
     max_pages: int = Query(default=1, ge=1, le=10),
     max_items: int = Query(default=5, ge=1, le=100),
 ) -> NewsResponse:
     """抓取全联相关部门政策信息，统一返回 NewsResponse。"""
-    chs = [s.strip() for s in channels.split(',') if s.strip()]
+    chs = parse_multi_select(channels_raw, ACFICChannel, 'channels', ['zy','bw','df','qggsl','jd'])
     crawler = ACFICPolicyCrawler(channels=chs or None, max_pages=max_pages, max_items=max_items)
     resp = crawler.get_news()
     if resp.status != 'OK' or resp.news_list is None:
@@ -54,23 +58,23 @@ async def get_acfic_policies(
     response_model=NewsResponse,
     summary="获取中国物流与采购联合会（CFLP）的政策/资讯",
     description=(
-        "支持 channels=zcfg(政策法规),zixun(资讯)，since_days 限制近 N 天（默认 7 天）"
+        "支持 channels=zcfg(政策法规),zixun(资讯)，兼容 dzsp→zixun，since_days 限制近 N 天（默认 7 天）"
     ),
     responses={
         200: {"description": "成功"},
+        400: {"description": "请求参数不合法"},
         500: {"description": "抓取失败"},
     },
 )
 async def get_cflp_news(
-    channels: str = Query(default='zcfg,zixun', description='频道 CSV: zcfg,zixun'),
+    channels_raw: Optional[List[str]] = Query(None, alias='channels', description='支持 CSV 与重复参数；可选 zcfg zixun；兼容 dzsp→zixun'),
     max_pages: int = Query(default=1, ge=1, le=10),
     max_items: int = Query(default=8, ge=1, le=100),
     since_days: int = Query(default=7, ge=1, le=60, description='近 N 天的数据，遇到分页前停止'),
 ) -> NewsResponse:
     """抓取 CFLP 政策/资讯并统一返回 NewsResponse。"""
-    chs = [s.strip() for s in channels.split(',') if s.strip()]
-    mapped = ['zixun' if c == 'dzsp' else c for c in chs] or None
-    crawler = CFLPNewsCrawler(channels=mapped, max_pages=max_pages, max_items=max_items, since_days=since_days)
+    chs = parse_multi_select(channels_raw, CFLPChannel, 'channels', ['zcfg','zixun'], alias_map={'dzsp':'zixun'})
+    crawler = CFLPNewsCrawler(channels=chs or None, max_pages=max_pages, max_items=max_items, since_days=since_days)
     resp = crawler.get_news()
     if resp.status != 'OK' or resp.news_list is None:
         raise HTTPException(status_code=500, detail=f"CFLP 抓取失败: {resp.err_code or ''} {resp.err_info or ''}")

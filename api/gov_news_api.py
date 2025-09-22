@@ -1,6 +1,9 @@
 """政府新闻 API 路由（并集融合）"""
 from fastapi import APIRouter, HTTPException, Query
+from typing import Optional, List
 from model import NewsResponse
+from model.enums import NDRCCategory
+from api.param_parsers import parse_multi_select
 
 # Crawlers from both codebases
 from gov_news.ndrc_news_crawler import NDRCNewsCrawler
@@ -18,7 +21,7 @@ gov_news_router = APIRouter()
     summary="获取国家发改委要闻/规范/通知等（可选分类）",
     description=(
         "抓取国家发改委多分类内容，统一为 NewsResponse。\n"
-        "categories 可选: fzggwl(综合), ghxwj(规范性文件), ghwb(规划文本), gg(公告), tz(通知)。"
+        "支持 CSV 与重复参数两种写法，可选: fzggwl(综合), ghxwj(规范性文件), ghwb(规划文本), gg(公告), tz(通知)。"
     ),
     responses={
         200: {"description": "成功"},
@@ -27,17 +30,20 @@ gov_news_router = APIRouter()
     },
 )
 async def get_daily_ndrc_news(
-    categories: str = Query(default='fzggwl', description='CSV: fzggwl,ghxwj,ghwb,gg,tz'),
+    categories_raw: Optional[List[str]] = Query(None, alias='categories', description='支持 CSV 与重复参数；可选 fzggwl ghxwj ghwb gg tz'),
     max_pages: int = Query(default=1, ge=1, le=10),
     max_items: int = Query(default=10, ge=1, le=100),
 ) -> NewsResponse:
     try:
-        cats = [s.strip() for s in categories.split(',') if s.strip()]
+        cats = parse_multi_select(categories_raw, NDRCCategory, 'categories', ['fzggwl'])
         crawler = NDRCNewsCrawler(categories=cats or None, max_pages=max_pages, max_items=max_items)
         resp = crawler.get_news()
         if resp.status != 'OK' or resp.news_list is None:
             raise HTTPException(status_code=500, detail=f"发改委抓取失败: {resp.err_code or ''} {resp.err_info or ''}")
         return resp
+    except HTTPException:
+        # 重新抛出参数解析错误（已在 parse_multi_select 中处理）
+        raise
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"请求参数不合法: {e}")
 
