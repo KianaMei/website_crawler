@@ -1,0 +1,28 @@
+{
+  "news_list": [
+    {
+      "title": "推动东北地区冰雪经济高质量发展助力全面振兴取得新突破实施方案",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/ghwb/202412/t20241205_1394866.html",
+      "origin": "规划文本",
+      "summary": "推动东北地区冰雪经济高质量发展助力全面振兴取得新突破实施方案",
+      "publish_date": "2024-12-05"
+    },
+    {
+      "title": "京津冀一流营商环境建设三年行动方案",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/ghwb/202408/t20240819_1392459.html",
+      "origin": "规划文本",
+      "summary": "京津冀一流营商环境建设三年行动方案",
+      "publish_date": "2024-08-19"
+    },
+    {
+      "title": "《粤港澳大湾区国际一流营商环境建设三年行动计划》",
+      "url": "https://www.ndrc.gov.cn/xxgk/zcfb/ghwb/202312/t20231225_1362911.html",
+      "origin": "规划文本",
+      "summary": "《粤港澳大湾区国际一流营商环境建设三年行动计划》",
+      "publish_date": "2023-12-25"
+    }
+  ],
+  "status": "OK",
+  "err_code": null,
+  "err_info": null
+}

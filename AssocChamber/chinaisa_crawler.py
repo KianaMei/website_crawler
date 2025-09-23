@@ -362,8 +362,8 @@ class ChinaISACrawler:
                         absu = _abs_url(INDEX_BASE, href)
                         summary, date_fb = self._fetch_detail_summary(absu)
                         use_date = date or (date_fb or '')
-                        origin_name = CHINAISA_COLUMNS.get(cid, '中国钢铁工业协会')
-                        news_list.append(News(title=title, url=absu, origin=f'中国钢铁工业协会-{origin_name}', summary=summary, publish_date=use_date))
+                        origin_name = '中国钢铁工业协会'
+                        news_list.append(News(title=title, url=absu, origin=origin_name, summary=summary, publish_date=use_date))
                         fetched += 1
                     if self.max_items and fetched >= self.max_items:
                         break

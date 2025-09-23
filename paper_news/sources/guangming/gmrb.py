@@ -10,7 +10,7 @@ def fetch_url(url: str) -> str:
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
     }
-    r = requests.get(url, headers=headers, timeout=30)
+    r = requests.get(url, headers=headers, timeout=30, proxies={'http': None, 'https': None})
     r.raise_for_status()
     r.encoding = r.apparent_encoding
     return r.text
@@ -55,10 +55,10 @@ def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str
             href = (a.get('href') or '').strip()
             if not href or href.lower().startswith('javascript'):
                 continue
-            # Normalize relative links to absolute
+            # 规范化相对链接为绝对链接
             abs_url = urljoin(page_url, href)
             link_list.append(abs_url)
-    # Filter to content pages
+    # 仅保留内容页链接
     filtered = [u for u in link_list if '/content/' in u or u.lower().endswith('.htm')]
     return filtered
 
@@ -72,7 +72,7 @@ def parse_article(html: str):
         title = soup.title.get_text(strip=True)
     title_valid = ''.join(i for i in title if i not in r'\/:*?"<>|')
     body = ''
-    # Try typical content container ids/classes
+    # 尝试常见的正文容器选择器（id/class）
     for sel in ['#ozoom', '#content', 'div#content', '.content', 'div.article', '#mdf', '#detail']:
         el = soup.select_one(sel)
         if el:

@@ -1,7 +1,6 @@
 from .transport_news_crawler import TransportNewsCrawler
 
-# Note: CommerceNewsCrawler depends on 'playwright'. To avoid hard dependency
-# during package import (e.g., tests that don't use it), we intentionally do
-# not import it here. Import inside the API handler when needed.
+# 说明：CommerceNewsCrawler 依赖 'playwright'。为避免在包导入阶段产生硬性依赖
+#（例如某些测试并未使用它），此处不进行顶层导入；按需在 API 处理函数内部导入。
 
 __all__ = ['TransportNewsCrawler']

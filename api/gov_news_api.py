@@ -5,11 +5,11 @@ from model import NewsResponse
 from model.enums import NDRCCategory
 from api.param_parsers import parse_multi_select
 
-# Crawlers from both codebases
+# 引用两个代码库中的爬虫实现
 from gov_news.ndrc_news_crawler import NDRCNewsCrawler
 from gov_news.transport_news_crawler import TransportNewsCrawler
-# Delay importing CommerceNewsCrawler to avoid optional dependency (playwright)
-# at app import time. We import it inside the route handler when needed.
+# 为避免可选依赖（playwright）在应用导入阶段成为硬依赖，延迟导入 CommerceNewsCrawler；
+# 仅在对应路由被调用时在函数内部按需导入。
 
 
 gov_news_router = APIRouter()
@@ -82,11 +82,11 @@ async def get_transport_gov_news() -> NewsResponse:
 )
 async def get_commerce_gov_news() -> NewsResponse:
     try:
-        # Local import to avoid hard dependency during app startup
+        # 在函数内本地导入，避免应用启动阶段出现硬依赖
         from gov_news.commerce_news_crawler import CommerceNewsCrawler
         url = r'https://www.mofcom.gov.cn/'
         commerce_gov_news_crawler = CommerceNewsCrawler(url=url)
-        return commerce_gov_news_crawler.get_news()
+        return await commerce_gov_news_crawler.get_news()
     except ValueError as e:
         raise HTTPException(status_code=404, detail=f"Website url error: {str(e)}")
 

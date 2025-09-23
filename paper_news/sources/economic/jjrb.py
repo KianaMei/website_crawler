@@ -4,7 +4,7 @@ import requests
 import bs4
 from urllib.parse import urljoin
 
-# Match original script
+# 与原始脚本行为保持一致
 DEFAULT_BASE_URL = 'http://paper.ce.cn/pc'
 
 
@@ -13,14 +13,14 @@ def fetch_url(url: str) -> str:
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
     }
-    r = requests.get(url, headers=headers, timeout=30)
+    r = requests.get(url, headers=headers, timeout=30, proxies={'http': None, 'https': None})
     r.raise_for_status()
     r.encoding = r.apparent_encoding
     return r.text
 
 
 def get_page_list(year: str, month: str, day: str, base_url: str = DEFAULT_BASE_URL) -> List[Tuple[str, str]]:
-    """Return list of (page_url, page_name) for the issue date."""
+    """返回指定刊期的页面列表 (page_url, page_name)。"""
     base_url = base_url.rstrip('/')
     base_layout = f'{base_url}/layout/{year}{month}/{day}/'
     url = urljoin(base_layout, 'node_01.html')

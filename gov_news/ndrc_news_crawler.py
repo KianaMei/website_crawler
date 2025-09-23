@@ -169,7 +169,7 @@ class NDRCNewsCrawler:
                 continue
             for title, url, date in self._fetch_category(cat_key):
                 summary = self._parse_detail_summary(url)
-                n = News(title=title, url=url, origin=conf['name'], summary=summary, publish_date=date or '')
+                n = News(title=title, url=url, origin='国家发改委', summary=summary, publish_date=date or '')
                 news_list.append(n)
         status = 'OK' if news_list else 'EMPTY'
         return NewsResponse(news_list=news_list or None, status=status, err_code=None if news_list else 'NO_DATA', err_info=None if news_list else 'No news parsed')

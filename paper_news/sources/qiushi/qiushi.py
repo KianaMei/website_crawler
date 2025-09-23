@@ -13,7 +13,7 @@ def fetch_url(url: str) -> str:
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
         'referer': 'https://www.qstheory.cn/'
     }
-    r = requests.get(url, headers=headers, timeout=30)
+    r = requests.get(url, headers=headers, timeout=30, proxies={'http': None, 'https': None})
     r.raise_for_status()
     r.encoding = r.apparent_encoding
     return r.text
@@ -148,7 +148,7 @@ def parse_article(html: str):
     return content_full, tvalid, title, body, body[:800]
 
 def get_issue_candidates_from_root(root_url: str = ROOT_INDEX_URL) -> List[Tuple[str, str, str]]:
-    """Return list of (name, url, yyyymmdd) candidates directly listed on the root index."""
+    """返回根目录索引直接列出的候选刊期 (name, url, yyyymmdd) 列表。"""
     html = fetch_url(root_url)
     s = bs4.BeautifulSoup(html, 'html.parser')
     items: List[Tuple[str, str, str]] = []
@@ -165,6 +165,6 @@ def get_issue_candidates_from_root(root_url: str = ROOT_INDEX_URL) -> List[Tuple
         date_str = m.group(1)
         name = a.get_text(strip=True) or f"求是 {date_str}"
         items.append((name, absu, date_str))
-    # sort by date desc
+    # 按日期倒序排列
     items.sort(key=lambda x: x[2], reverse=True)
     return items

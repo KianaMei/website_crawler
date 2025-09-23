@@ -11,9 +11,21 @@ dependencies = [
   "beautifulsoup4>=4.12",
   "html5lib>=1.1",
   "pydantic>=2.6",
+  "playwright>=1.42",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "httpx",
 ]
 
 [[tool.uv.index]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
 
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=8.4.2",
+]

@@ -24,14 +24,14 @@ CFLP_CHANNELS: Dict[str, Dict[str, str]] = {
         'base': 'http://www.chinawuliu.com.cn/zcfg/',
         'first_page': 'http://www.chinawuliu.com.cn/zcfg/',
         'page_pattern': 'http://www.chinawuliu.com.cn/zcfg/index_{}.html',
-        'origin': 'CFLP-Policy',
+        'origin': '中国物流与采购联合会',
     },
     'zixun': {
         'name': 'News',
         'base': 'http://www.chinawuliu.com.cn/zixun/',
         'first_page': 'http://www.chinawuliu.com.cn/zixun/',
         'page_pattern': 'http://www.chinawuliu.com.cn/zixun/index_{}.html',
-        'origin': 'CFLP-News',
+        'origin': '中国物流与采购联合会',
     },
 }
 
@@ -215,12 +215,6 @@ class CFLPNewsCrawler:
         conf = CFLP_CHANNELS[ch_key]
         base = conf['base']
         acc: List[Tuple[str, str, str]] = []
-        # build threshold date
-        try:
-            from datetime import datetime, timedelta
-            threshold = (datetime.today() - timedelta(days=self.since_days)).date()
-        except Exception:
-            threshold = None
         for url in self._iter_list_pages(conf):
             html = get_html_from_url(url)
             if not html:
@@ -231,25 +225,8 @@ class CFLPNewsCrawler:
                 items = self._parse_list_zixun_like(html, base)
             if not items:
                 break
-            # apply basic per-page date filter if threshold available
-            page_items: List[Tuple[str, str, str]] = []
-            old_count = 0
-            for title, it_url, date in items:
-                if threshold and date:
-                    try:
-                        from datetime import datetime
-                        dt = datetime.strptime(date, '%Y-%m-%d').date()
-                        if dt < threshold:
-                            old_count += 1
-                    except Exception:
-                        pass
-                page_items.append((title, it_url, date))
-            acc.extend(page_items)
-            if self.max_items and len(acc) >= self.max_items:
-                acc = acc[: self.max_items]
-                break
-            # if most items on this page are old, stop iterating
-            if threshold and items and old_count >= max(3, int(0.6 * len(items))):
+            acc.extend(items)
+            if self.max_items and len(acc) >= self.max_items * 2: # fetch more to filter
                 break
         return acc
 
@@ -272,74 +249,82 @@ class CFLPNewsCrawler:
 
     def get_news(self) -> NewsResponse:
         try:
-            news_list: List[News] = []
-            # build threshold
-            try:
-                from datetime import datetime, timedelta
-                threshold = (datetime.today() - timedelta(days=self.since_days)).date()
-            except Exception:
-                threshold = None
+            from datetime import datetime, timedelta
+            
+            all_items = []
             for ch in self.channels:
                 conf = CFLP_CHANNELS[ch]
-                origin = conf['origin']
+                origin = '中国物流与采购联合会'
                 items = self._fetch_channel(ch)
-                # For zixun, apply category demotion and date sort
-                if ch == 'zixun':
-                    # enrich with summary and date fallback
-                    enriched = []
-                    for title, url, date in items:
-                        summary, date_fb = self._parse_detail(url)
-                        use_date = date or date_fb or ''
-                        enriched.append((title, url, use_date, summary))
-                    # optional filter by since_days
-                    if threshold:
-                        tmp = []
-                        for title, url, d, summary in enriched:
-                            ok = True
-                            if d:
-                                try:
-                                    from datetime import datetime
-                                    dt = datetime.strptime(d, '%Y-%m-%d').date()
-                                    ok = dt >= threshold
-                                except Exception:
-                                    ok = True
-                            if ok:
-                                tmp.append((title, url, d, summary))
-                        enriched = tmp
-                    # sort: demote categories, then date desc
-                    def sort_key(row):
-                        title, url, d, _ = row
-                        rank = self._category_rank(url, title)
+                for title, url, date in items:
+                    all_items.append({'title': title, 'url': url, 'date': date, 'origin': origin, 'channel': ch})
+
+            # Enrich items with details
+            enriched_items = []
+            for item in all_items:
+                summary, date_fb = self._parse_detail(item['url'])
+                use_date = item['date'] or date_fb or ''
+                enriched_items.append({**item, 'summary': summary, 'date': use_date})
+
+            # Find the latest date among all fetched items
+            latest_date = None
+            for item in enriched_items:
+                if item['date']:
+                    try:
+                        d = datetime.strptime(item['date'], '%Y-%m-%d').date()
+                        if latest_date is None or d > latest_date:
+                            latest_date = d
+                    except ValueError:
+                        continue
+
+            # If a latest date is found, filter based on it
+            filtered_items = []
+            if latest_date:
+                threshold = latest_date - timedelta(days=self.since_days)
+                for item in enriched_items:
+                    if item['date']:
                         try:
-                            from datetime import datetime
-                            ts = datetime.strptime(d, '%Y-%m-%d')
-                        except Exception:
-                            # unknown date -> minimal
-                            from datetime import datetime
-                            ts = datetime.min
-                        return (rank, -ts.timestamp())
-                    enriched.sort(key=sort_key)
-                    for title, url, d, summary in enriched:
-                        if self.max_items and len(news_list) >= self.max_items:
-                            break
-                        news_list.append(News(title=title, url=url, origin=origin, summary=summary, publish_date=d))
-                else:
-                    # zcfg: preserve list order, fetch summary and fallback date
-                    for title, url, date in items:
-                        if self.max_items and len(news_list) >= self.max_items:
-                            break
-                        summary, date_fb = self._parse_detail(url)
-                        use_date = date or date_fb or ''
-                        # filter by since_days if applicable
-                        if threshold and use_date:
-                            try:
-                                from datetime import datetime
-                                dt = datetime.strptime(use_date, '%Y-%m-%d').date()
-                                if dt < threshold:
-                                    continue
-                            except Exception:
-                                pass
-                        news_list.append(News(title=title, url=url, origin=origin, summary=summary, publish_date=use_date))
+                            d = datetime.strptime(item['date'], '%Y-%m-%d').date()
+                            if d >= threshold:
+                                filtered_items.append(item)
+                        except ValueError:
+                            pass
+                    else:
+                         # Keep items with no date if no date filter is applied
+                         pass
+            else: # If no dates found, return all items
+                filtered_items = enriched_items
+
+
+            # Sort zixun items and combine
+            news_list: List[News] = []
+            zixun_items = [item for item in filtered_items if item['channel'] == 'zixun']
+            zcfg_items = [item for item in filtered_items if item['channel'] == 'zcfg']
+
+            def sort_key(item):
+                rank = self._category_rank(item['url'], item['title'])
+                try:
+                    ts = datetime.strptime(item['date'], '%Y-%m-%d')
+                except (ValueError, TypeError):
+                    ts = datetime.min
+                return (rank, -ts.timestamp())
+
+            zixun_items.sort(key=sort_key)
+
+            # Combine lists, zcfg first
+            sorted_items = zcfg_items + zixun_items
+            
+            for item in sorted_items:
+                if self.max_items and len(news_list) >= self.max_items:
+                    break
+                news_list.append(News(
+                    title=item['title'],
+                    url=item['url'],
+                    origin=item['origin'],
+                    summary=item['summary'],
+                    publish_date=item['date']
+                ))
+
             status = 'OK' if news_list else 'EMPTY'
             return NewsResponse(news_list=news_list or None, status=status,
                                 err_code=None if news_list else 'NO_DATA',

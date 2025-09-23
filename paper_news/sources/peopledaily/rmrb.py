@@ -10,7 +10,7 @@ def fetch_url(url: str) -> str:
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
     }
-    r = requests.get(url, headers=headers, timeout=30)
+    r = requests.get(url, headers=headers, timeout=30, proxies={'http': None, 'https': None})
     r.raise_for_status()
     r.encoding = r.apparent_encoding
     return r.text
@@ -77,7 +77,7 @@ def parse_article(html: str):
         for p in p_list:
             content_body += p.get_text(strip=True) + '\n'
     else:
-        # Fallback: collect all p tags
+        # 兜底：收集所有 <p> 标签文本
         content_body = '\n'.join(p.get_text(strip=True) for p in bsobj.find_all('p'))
     summary = content_body.strip()
     content_full = ''

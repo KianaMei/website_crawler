@@ -15,14 +15,20 @@ def fetch_url(url: str) -> str:
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
         'referer': 'http://dz.jjckb.cn/'
     }
-    r = requests.get(url, headers=headers, timeout=30)
-    r.raise_for_status()
-    if not r.encoding:
-        r.encoding = r.apparent_encoding
-    else:
-        # trust site header but fix if needed
-        r.encoding = r.apparent_encoding
-    return r.text
+    try:
+        print(f"[jjckb_crawler] Fetching URL: {url}", flush=True)
+        r = requests.get(url, headers=headers, timeout=10, proxies={'http': None, 'https': None})
+        print(f"[jjckb_crawler] Fetched URL: {url} with status {r.status_code}", flush=True)
+        r.raise_for_status()
+        if not r.encoding:
+            r.encoding = r.apparent_encoding
+        else:
+            # trust site header but fix if needed
+            r.encoding = r.apparent_encoding
+        return r.text
+    except Exception as e:
+        print(f"[jjckb_crawler] Failed to fetch {url}: {e}", flush=True)
+        return ''
 
 
 def _date_root(year: str, month: str, day: str, base_url: str = DEFAULT_BASE_URL) -> str:
@@ -56,7 +62,7 @@ def _pick_first_node(root: str) -> Tuple[str, str]:
 
 
 def get_page_list(year: str, month: str, day: str, base_url: str = DEFAULT_BASE_URL) -> List[Tuple[str, str]]:
-    """Return list of (page_url, page_name) for the issue date.
+    """返回指定刊期的页面列表 (page_url, page_name)。
 
     Parse the '版面导航' section (anchors with id=pageLink) from any available node page.
     """
@@ -66,14 +72,14 @@ def get_page_list(year: str, month: str, day: str, base_url: str = DEFAULT_BASE_
         return []
     soup = BeautifulSoup(html, 'html.parser')
     items: List[Tuple[str, str]] = []
-    # version 1: dedicated nav table
+    # 版本 1：专用导航表
     for a in soup.find_all('a', id='pageLink', href=True):
         href = a['href'].strip()
         name = a.get_text(strip=True) or href
         absu = urljoin(start_url, href)
         valid_name = ''.join(ch for ch in name if ch not in r'\/:*?"<>|')
         items.append((absu, valid_name))
-    # fallback: any node_*.htm anchors
+    # 兜底：任意 node_*.htm 链接
     if not items:
         seen = set()
         for a in soup.find_all('a', href=True):
@@ -87,19 +93,19 @@ def get_page_list(year: str, month: str, day: str, base_url: str = DEFAULT_BASE_
             name = a.get_text(strip=True) or href
             valid_name = ''.join(ch for ch in name if ch not in r'\/:*?"<>|')
             items.append((absu, valid_name))
-    # ensure at least the start_url is included
+    # 确保至少包含起始页面 start_url
     if start_url and not any(u == start_url for u, _ in items):
         items.insert(0, (start_url, 'A01'))
     return items
 
 
 def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str = DEFAULT_BASE_URL) -> List[str]:
-    """Return list of article URLs from a page (node_*.htm)."""
+    """返回 node_*.htm 页面中的文章链接列表。"""
     html = fetch_url(page_url)
     soup = BeautifulSoup(html, 'html.parser')
     links: List[str] = []
     seen = set()
-    # primary: list under ul.ul02_l
+    # 优先：ul.ul02_l 下的列表
     for li in soup.select('ul.ul02_l li'):
         a = li.find('a', href=True)
         if not a:
@@ -112,7 +118,7 @@ def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str
             continue
         seen.add(absu)
         links.append(absu)
-    # secondary: image map areas
+    # 次选：图片映射区域
     if not links:
         for area in soup.find_all('area', href=True):
             href = area['href'].strip()
@@ -123,7 +129,7 @@ def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str
                 continue
             seen.add(absu)
             links.append(absu)
-    # final safety: any href matching content_*.htm
+    # 最终兜底：匹配 content_*.htm 的链接
     if not links:
         for a in soup.find_all('a', href=True):
             href = a['href'].strip()
@@ -138,10 +144,10 @@ def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str
 
 
 def parse_article(html: str):
-    """Parse article to (content_full, title_valid, title, body, summary)."""
+    """解析文章内容，返回 (content_full, title_valid, title, body, summary)。"""
     soup = BeautifulSoup(html, 'html.parser')
     raw = soup.decode()
-    # title from enpproperty founder-title, or h1/h2/title
+    # 标题来源：enpproperty founder-title，或 h1/h2/title
     m = re.search(r'<founder-title>(.*?)</founder-title>', raw, flags=re.I | re.S)
     title = ''
     if m:
@@ -154,7 +160,7 @@ def parse_article(html: str):
                 break
     title_valid = ''.join(ch for ch in title if ch not in r'\/:*?"<>|')
 
-    # body from <founder-content> paragraphs, or common containers
+    # 正文：优先 <founder-content> 段落，或常见容器
     body = ''
     fcontent = soup.find('founder-content')
     if fcontent:
@@ -171,4 +177,3 @@ def parse_article(html: str):
     content_full = (title + '\n' + body) if title else body
     summary = body[:800]
     return content_full, title_valid, title, body, summary
-

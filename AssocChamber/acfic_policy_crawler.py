@@ -22,35 +22,35 @@ ACFIC_CHANNELS: Dict[str, Dict[str, str]] = {
         'base': 'https://www.acfic.org.cn/zcsd/zy/',
         'first_page': 'https://www.acfic.org.cn/zcsd/zy/index.html',
         'page_pattern': 'https://www.acfic.org.cn/zcsd/zy/index_{}.html',  # {} => 1,2,...
-        'origin': 'ACFIC-Central',
+        'origin': '全国工商联',
     },
     'bw': {
         'name': 'Ministries',
         'base': 'https://www.acfic.org.cn/zcsd/bw/',
         'first_page': 'https://www.acfic.org.cn/zcsd/bw/index.html',
         'page_pattern': 'https://www.acfic.org.cn/zcsd/bw/index_{}.html',
-        'origin': 'ACFIC-Ministries',
+        'origin': '全国工商联',
     },
     'df': {
         'name': 'Local',
         'base': 'https://www.acfic.org.cn/zcsd/df/',
         'first_page': 'https://www.acfic.org.cn/zcsd/df/index.html',
         'page_pattern': 'https://www.acfic.org.cn/zcsd/df/index_{}.html',
-        'origin': 'ACFIC-Local',
+        'origin': '全国工商联',
     },
     'qggsl': {
         'name': 'ACFIC',
         'base': 'https://www.acfic.org.cn/zcsd/qggsl/',
         'first_page': 'https://www.acfic.org.cn/zcsd/qggsl/index.html',
         'page_pattern': 'https://www.acfic.org.cn/zcsd/qggsl/index_{}.html',
-        'origin': 'ACFIC',
+        'origin': '全国工商联',
     },
     'jd': {
         'name': 'Interpretation',
         'base': 'https://www.acfic.org.cn/zcsd/jd/',
         'first_page': 'https://www.acfic.org.cn/zcsd/jd/index.html',
         'page_pattern': 'https://www.acfic.org.cn/zcsd/jd/index_{}.html',
-        'origin': 'ACFIC-Interpretation',
+        'origin': '全国工商联',
     },
 }
 
@@ -170,7 +170,7 @@ class ACFICPolicyCrawler:
         news_list: List[News] = []
         for ch in self.channels:
             conf = ACFIC_CHANNELS[ch]
-            origin = conf['origin']
+            origin = '全国工商联'
             for title, url, date in self._fetch_channel(ch):
                 summary = self._parse_detail_summary(url)
                 news_list.append(News(title=title, url=url, origin=origin, summary=summary, publish_date=date or ''))

@@ -21,10 +21,11 @@ SUPPORTED_SOURCES['jjckb'] = '经济参考报'
 
 class PaperNewsCrawler:
     """
-    Aggregate wrapper to fetch paper news from multiple official newspapers.
-    source: one of peopledaily|guangming|economic|chinadaily|qiushi
-    max_items: limit number of articles returned.
-    since_days: only used by chinadaily to filter recent days (default 3)
+    聚合多个官方报纸站点的抓取器封装。
+    参数说明：
+    - source: 报纸来源，取值 peopledaily|guangming|economic|qiushi|xinhua|jjckb
+    - max_items: 返回的最大文章数量上限
+    - since_days: 仅用于个别源过滤最近 N 天数据（默认 3）
     """
 
     def __init__(self, source: str = 'peopledaily', max_items: int = 10, since_days: int = 3, date: str | None = None):
@@ -38,7 +39,7 @@ class PaperNewsCrawler:
         return f"{today.year}", f"{today.month:02d}", f"{today.day:02d}"
 
     def _find_available_date(self, get_pages_func, max_back_days: int = 7) -> Tuple[str, str, str]:
-        # If user specified a date, try that first
+        # 若用户指定了日期，优先尝试该期
         if self.date:
             try:
                 y, m, d = self.date.split('-')
@@ -118,10 +119,10 @@ class PaperNewsCrawler:
                         news_list.append(self._build_news(title, url, origin, summary or content_body, f"{y}-{m}-{d}"))
                 return NewsResponse(news_list=news_list)
             if self.source == 'qiushi':
-                # 1) Try latest issue directly from root index
+                # 1）直接从根索引尝试最新一期
                 candidates = mod_qiushi.get_issue_candidates_from_root(mod_qiushi.ROOT_INDEX_URL)
                 chosen = None
-                # If user provided date, prefer that issue (yyyymmdd)
+                # 若用户提供了日期（yyyymmdd），优先匹配该期
                 target_idate = None
                 if self.date:
                     try:
@@ -136,7 +137,7 @@ class PaperNewsCrawler:
                     if not target_idate and mod_qiushi.is_issue_directory(iurl):
                         chosen = (name, iurl, idate)
                         break
-                # 2) Fallback to year directory under /dukan/qs/
+                # 2）兜底：进入 /dukan/qs/ 年目录中查找
                 if not chosen:
                     years = mod_qiushi.get_year_list(mod_qiushi.ROOT_INDEX_URL)
                     if not years:
@@ -205,7 +206,6 @@ class PaperNewsCrawler:
             return NewsResponse(news_list=None, status='ERROR', err_code='NOT_IMPLEMENTED', err_info='Unknown source handler')
         except Exception as e:
             return NewsResponse(news_list=None, status='ERROR', err_code='EXCEPTION', err_info=str(e))
-
 
 
 
