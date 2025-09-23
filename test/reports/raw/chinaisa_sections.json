@@ -1,0 +1,248 @@
+{
+  "sections": {
+    "c42511ce3f868a515b49668dd250290c80d4dc8930c7e455d0e6e14b8033eae2": {
+      "name": "要闻",
+      "subtabs": []
+    },
+    "268f86fdf61ac8614f09db38a2d0295253043b03e092c7ff48ab94290296125c": {
+      "name": "会员动态",
+      "subtabs": []
+    },
+    "2e3c87064bdfc0e43d542d87fce8bcbc8fe0463d5a3da04d7e11b4c7d692194b": {
+      "name": "统计发布",
+      "subtabs": [
+        {
+          "id": "3238889ba0fa3aabcf28f40e537d440916a361c9170a4054f9fc43517cb58c1e",
+          "name": "生产经营"
+        },
+        {
+          "id": "95ef75c752af3b6c8be479479d8b931de7418c00150720280d78c8f0da0a438c",
+          "name": "进出口"
+        },
+        {
+          "id": "619ce7b53a4291d47c19d0ee0765098ca435e252576fbe921280a63fba4bc712",
+          "name": "环保统计"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "3238889ba0fa3aabcf28f40e537d440916a361c9170a4054f9fc43517cb58c1e",
+          "name": "生产经营"
+        },
+        {
+          "id": "95ef75c752af3b6c8be479479d8b931de7418c00150720280d78c8f0da0a438c",
+          "name": "进出口"
+        },
+        {
+          "id": "619ce7b53a4291d47c19d0ee0765098ca435e252576fbe921280a63fba4bc712",
+          "name": "环保统计"
+        }
+      ],
+      "added": [],
+      "missing": []
+    },
+    "1b4316d9238e09c735365896c8e4f677a3234e8363e5622ae6e79a5900a76f56": {
+      "name": "行业分析",
+      "subtabs": [
+        {
+          "id": "a44207e193a5caa5e64102604b6933896a0025eb85c57c583b39626f33d4dafd",
+          "name": "市场价格分析"
+        },
+        {
+          "id": "05d0e136828584d2cd6e45bdc3270372764781b98546cce122d9974489b1e2f2",
+          "name": "板带材"
+        },
+        {
+          "id": "197422a82d9a09b9cc86188444574816e93186f2fde87474f8b028fc61472d35",
+          "name": "社会库存"
+        },
+        {
+          "id": "6dfc16a60056ec0f2234d45f5fd7068ec4d75f66021df5ff544102801674a59a",
+          "name": "钢铁原料"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "a44207e193a5caa5e64102604b6933896a0025eb85c57c583b39626f33d4dafd",
+          "name": "市场价格分析"
+        },
+        {
+          "id": "05d0e136828584d2cd6e45bdc3270372764781b98546cce122d9974489b1e2f2",
+          "name": "板带材"
+        },
+        {
+          "id": "197422a82d9a09b9cc86188444574816e93186f2fde87474f8b028fc61472d35",
+          "name": "社会库存"
+        },
+        {
+          "id": "6dfc16a60056ec0f2234d45f5fd7068ec4d75f66021df5ff544102801674a59a",
+          "name": "钢铁原料"
+        }
+      ],
+      "added": [],
+      "missing": []
+    },
+    "17b6a9a214c94ccc28e56d4d1a2dbb5acef3e73da431ddc0a849a4dcfc487d04": {
+      "name": "价格指数",
+      "subtabs": [
+        {
+          "id": "63913b906a7a663f7f71961952b1ddfa845714b5982655b773a62b85dd3b064e",
+          "name": "综合价格指数"
+        },
+        {
+          "id": "fc816c75aed82b9bc25563edc9cf0a0488a2012da38cbef5258da614d6e51ba9",
+          "name": "地区价格"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "63913b906a7a663f7f71961952b1ddfa845714b5982655b773a62b85dd3b064e",
+          "name": "综合价格指数"
+        },
+        {
+          "id": "fc816c75aed82b9bc25563edc9cf0a0488a2012da38cbef5258da614d6e51ba9",
+          "name": "地区价格"
+        }
+      ],
+      "added": [],
+      "missing": []
+    },
+    "5d77b433182404193834120ceed16fe0625860fafd5fd9e71d0800c4df227060": {
+      "name": "宏观经济信息",
+      "subtabs": []
+    },
+    "ae2a3c0fd4936acf75f4aab6fadd08bc6371aa65bdd50419e74b70d6f043c473": {
+      "name": "相关行业信息",
+      "subtabs": []
+    },
+    "1bad7c56af746a666e4a4e56e54a9508d344d7bc1498360580613590c16b6c41": {
+      "name": "国际动态",
+      "subtabs": []
+    },
+    "58af05dfb6b4300151760176d2aad0a04c275aaadbb1315039263f021f920dcd": {
+      "name": "钢协动态",
+      "subtabs": [
+        {
+          "id": "67ea4f106bd8f0843c0538d43833c463a0cd411fc35642cbd555a5f39fcf352b",
+          "name": "钢协要闻"
+        },
+        {
+          "id": "e5070694f299a43b20d990e53b6a69dc02e755fef644ae667cf75deaff80407a",
+          "name": "会议报道"
+        }
+      ]
+    },
+    "a873c2e67b26b4a2d8313da769f6e106abc9a1ff04b7f1a50674dfa47cf91a7b": {
+      "name": "领导讲话",
+      "subtabs": []
+    },
+    "179cde9e2d8f7e84968dbfb9948056843a6f9e27f2aefd09bbb3ce67c501cccf": {
+      "name": "通知公告",
+      "subtabs": []
+    }
+  },
+  "groups": [
+    {
+      "name": "统计发布",
+      "subtabs": [
+        {
+          "id": "3238889ba0fa3aabcf28f40e537d440916a361c9170a4054f9fc43517cb58c1e",
+          "name": "生产经营"
+        },
+        {
+          "id": "95ef75c752af3b6c8be479479d8b931de7418c00150720280d78c8f0da0a438c",
+          "name": "进出口"
+        },
+        {
+          "id": "619ce7b53a4291d47c19d0ee0765098ca435e252576fbe921280a63fba4bc712",
+          "name": "环保统计"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "3238889ba0fa3aabcf28f40e537d440916a361c9170a4054f9fc43517cb58c1e",
+          "name": "生产经营"
+        },
+        {
+          "id": "95ef75c752af3b6c8be479479d8b931de7418c00150720280d78c8f0da0a438c",
+          "name": "进出口"
+        },
+        {
+          "id": "619ce7b53a4291d47c19d0ee0765098ca435e252576fbe921280a63fba4bc712",
+          "name": "环保统计"
+        }
+      ],
+      "added": [],
+      "missing": [],
+      "id": "2e3c87064bdfc0e43d542d87fce8bcbc8fe0463d5a3da04d7e11b4c7d692194b"
+    },
+    {
+      "name": "行业分析",
+      "subtabs": [
+        {
+          "id": "a44207e193a5caa5e64102604b6933896a0025eb85c57c583b39626f33d4dafd",
+          "name": "市场价格分析"
+        },
+        {
+          "id": "05d0e136828584d2cd6e45bdc3270372764781b98546cce122d9974489b1e2f2",
+          "name": "板带材"
+        },
+        {
+          "id": "197422a82d9a09b9cc86188444574816e93186f2fde87474f8b028fc61472d35",
+          "name": "社会库存"
+        },
+        {
+          "id": "6dfc16a60056ec0f2234d45f5fd7068ec4d75f66021df5ff544102801674a59a",
+          "name": "钢铁原料"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "a44207e193a5caa5e64102604b6933896a0025eb85c57c583b39626f33d4dafd",
+          "name": "市场价格分析"
+        },
+        {
+          "id": "05d0e136828584d2cd6e45bdc3270372764781b98546cce122d9974489b1e2f2",
+          "name": "板带材"
+        },
+        {
+          "id": "197422a82d9a09b9cc86188444574816e93186f2fde87474f8b028fc61472d35",
+          "name": "社会库存"
+        },
+        {
+          "id": "6dfc16a60056ec0f2234d45f5fd7068ec4d75f66021df5ff544102801674a59a",
+          "name": "钢铁原料"
+        }
+      ],
+      "added": [],
+      "missing": [],
+      "id": "1b4316d9238e09c735365896c8e4f677a3234e8363e5622ae6e79a5900a76f56"
+    },
+    {
+      "name": "价格指数",
+      "subtabs": [
+        {
+          "id": "63913b906a7a663f7f71961952b1ddfa845714b5982655b773a62b85dd3b064e",
+          "name": "综合价格指数"
+        },
+        {
+          "id": "fc816c75aed82b9bc25563edc9cf0a0488a2012da38cbef5258da614d6e51ba9",
+          "name": "地区价格"
+        }
+      ],
+      "baseline_subtabs": [
+        {
+          "id": "63913b906a7a663f7f71961952b1ddfa845714b5982655b773a62b85dd3b064e",
+          "name": "综合价格指数"
+        },
+        {
+          "id": "fc816c75aed82b9bc25563edc9cf0a0488a2012da38cbef5258da614d6e51ba9",
+          "name": "地区价格"
+        }
+      ],
+      "added": [],
+      "missing": [],
+      "id": "17b6a9a214c94ccc28e56d4d1a2dbb5acef3e73da431ddc0a849a4dcfc487d04"
+    }
+  ]
+}

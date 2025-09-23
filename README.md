@@ -23,7 +23,7 @@
 - 运行服务
   - `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
   - 打开文档：`http://127.0.0.1:8000/docs`（Swagger）或 `http://127.0.0.1:8000/redoc`
-- 可选依赖：若要使用“商务部”接口（需要动态渲染），请安装 Playwright：
+- 可选依赖：若要使用"商务部"接口（需要动态渲染），请安装 Playwright：
   - `pip install playwright`
   - `python -m playwright install chromium`
 
@@ -42,11 +42,110 @@
       "summary": "简要内容（适当截断）",
       "publish_date": "YYYY-MM-DD"
     }
+=======
+# Website Crawler · 站点抓取聚合服务
+
+基于 FastAPI 的新闻抓取聚合服务，统一输出结构化 JSON，包含：
+- 央视新闻联播每日新闻
+- Aibase 每日 AI 新闻
+- 报纸新闻（人民日报/光明日报/经济日报/求是/新华每日电讯/经济参考报）
+- 政务新闻（国家发改委栏目）
+
+提供统一的数据模型（Pydantic）与 REST API，并附架构示意图（`docs/diagrams/index.html`）。
+
+## 更新亮点（近期）
+- 新增报纸源：新华每日电讯（mrdx.cn）、经济参考报（dz.jjckb.cn）
+- 工商联（AssocChamber）完善：新增"解读"频道（jd），API 文案中文化，并统一返回结构
+- CFLP（中国物流与采购联合会）：合并"大宗商品"为资讯子栏目；新增 since_days 近 N 天过滤与分页提前停止；详情日期兜底；资讯类降权排序
+- 新增中国钢铁工业协会（ChinaISA）爬虫：统一 AJAX 接口模拟、支持"统计发布/行业分析/价格指数"三大类的子栏目递归抓取；新增精简路由 `/api/chinaisa/news`、`/api/chinaisa/sections`
+
+## 目录结构（当前）
+```
+website_crawler/
+├─ main.py                  # FastAPI 应用入口，注册路由
+├─ api/                     # API 路由
+│  ├─ cctv_news_api.py
+│  ├─ ai_news_api.py
+│  ├─ paper_news_api.py
+│  ├─ gov_news_api.py
+│  └─ assoc_chamber_api.py  # 工商联/协会（ACFIC、CFLP、ChinaISA）
+├─ cctv_news/               # 央视新闻爬虫
+├─ ai_news/                 # Aibase 每日 AI 爬虫
+├─ paper_news/              # 报纸新闻聚合与来源适配
+├─ gov_news/                # 政务新闻（发改委等）
+├─ AssocChamber/            # 行业/协会：
+│  ├─ acfic_policy_crawler.py   # 全联政策
+│  ├─ cflp_crawler.py           # 物流与采购联合会
+│  └─ chinaisa_crawler.py       # 中国钢铁工业协会（含子栏目）
+├─ model/                   # 统一响应模型（Pydantic）
+│  └─ response/
+└─ utils/                   # HTTP/UA 等工具
+```
+
+## 环境要求
+- Python 3.10+（开发环境 3.12/3.13 均可）
+- Windows/macOS/Linux
+
+## 安装与运行
+1) 虚拟环境
+```
+python -m venv .venv
+# Windows PowerShell
+. .venv/Scripts/Activate.ps1
+python -m pip install --upgrade pip
+```
+
+2) 使用 uv 同步依赖（推荐，已在 pyproject.toml 声明）
+```
+pip install uv
+uv sync
+```
+
+3) 启动服务
+```
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+4) 打开接口文档
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
+
+## 统一返回模型
+```
+NewsResponse {
+  status: "OK" | "ERROR" | "EMPTY",
+  err_code: string | null,
+  err_info: string | null,
+  news_list: [
+    {
+      title: string,
+      url: string,
+      origin: string,
+      summary: string,
+      publish_date: "YYYY-MM-DD"
+    }, ...
+  ] | null
+}
+```
+
+## API 一览与规范（统一返回 NewsResponse）
+
+- GET `/api/get_daily_cctv_news`
+  - 用途：获取《新闻联播》（前一日）
+  - 入参：无
+  - 返回：NewsResponse（示例）
+```
+{
+  "status": "OK",
+  "news_list": [
+    {"title":"我国取得重大科技突破","url":"https://tv.cctv.com/...","origin":"新闻联播","summary":"摘要……","publish_date":"2025-09-18"}
+>>>>>>> 129ab969faef3e50a363b109c271382f7fe42f70
   ],
   "err_code": null,
   "err_info": null
 }
 ```
+<<<<<<< HEAD
 - status：OK 有数据；EMPTY 已成功但无数据；ERROR 出错（查看 err_code/err_info）
 - 数据模型定义：`model/response/news.py:1`，`model/response/news_response.py:1`
 
@@ -104,7 +203,7 @@
 - 路径：`GET /api/get_commerce_gov_news`
 - 入参：无
 - 出参：NewsResponse（近几日领导/部领导活动）
-- 说明：依赖 Playwright 动态渲染，请安装“可选依赖”章节所述组件
+- 说明：依赖 Playwright 动态渲染，请安装"可选依赖"章节所述组件
 - 代码：`api/gov_news_api.py:1`，爬虫 `gov_news/commerce_news_crawler.py:1`
 
 ### 7) 全联 ACFIC（政策信息）
@@ -210,3 +309,136 @@
 ## 许可与致谢
 - 仅用于技术研究与信息聚合，严禁用于任何违反对方站点使用条款的行为
 - 内容版权归原作者/网站所有
+=======
+
+- GET `/api/get_daily_ai_news`
+  - 用途：获取 AI 新闻（当天）
+  - 入参：无
+  - 返回：NewsResponse（示例）
+```
+{
+  "status":"OK",
+  "news_list":[
+    {"title":"大模型落地应用进展","url":"https://news.aibase.com/zh/daily/...","origin":"Aibase 每日 AI","summary":"摘要……","publish_date":"2025-09-19"}
+  ],
+  "err_code":null,
+  "err_info":null
+}
+```
+
+- GET `/api/get_daily_paper_news`
+  - 用途：获取报纸新闻（可指定日期）
+  - 入参：
+    - `source`: `peopledaily|guangming|economic|qiushi|xinhua|jjckb`（默认 `peopledaily`）
+    - `max_items`: 1–50（默认 10）
+    - `date`: `YYYY-MM-DD`（可选，不填自动选择最近一期）
+  - 返回：NewsResponse（示例）
+```
+{
+  "status":"OK",
+  "news_list":[
+    {"title":"高质量发展迈出新步伐","url":"http://paper.people.com.cn/...","origin":"人民日报","summary":"摘要……","publish_date":"2025-09-19"}
+  ],
+  "err_code":null,
+  "err_info":null
+}
+```
+
+- GET `/api/get_daily_ndrc_news`
+  - 用途：获取国家发改委栏目（可选分类）
+  - 入参：
+    - `categories`: `fzggwl,ghxwj,ghwb,gg,tz`（CSV，多选）
+    - `max_pages`: 1–10（默认 1）
+    - `max_items`: 1–100（默认 10）
+  - 返回：NewsResponse（示例）
+```
+{
+  "status":"OK",
+  "news_list":[
+    {"title":"关于印发有关文件的通知","url":"https://www.ndrc.gov.cn/...","origin":"规范性文件","summary":"摘要……","publish_date":"2025-09-18"}
+  ],
+  "err_code":null,
+  "err_info":null
+}
+```
+
+- GET `/api/get_acfic_policies`
+  - 用途：全联政策聚合（中央/部委/地方/全联/解读）
+  - 入参：
+    - `channels`: `zy,bw,df,qggsl,jd`（CSV，默认全选）
+    - `max_pages`: 1–10（默认 1）
+    - `max_items`: 1–100（默认 5）
+  - 返回：NewsResponse（示例）
+```
+{
+  "status":"OK",
+  "news_list":[
+    {"title":"关于…的通知","url":"https://www.acfic.org.cn/...","origin":"全联-中央","summary":"摘要……","publish_date":"2025-09-16"}
+  ],
+  "err_code":null,
+  "err_info":null
+}
+```
+
+- GET `/api/get_cflp_news`
+  - 用途：中国物流与采购联合会（政策/资讯）
+  - 入参：
+    - `channels`: `zcfg,zixun`（CSV，默认 `zcfg,zixun`）
+    - `max_pages`: 1–10（默认 1）
+    - `max_items`: 1–100（默认 8）
+    - `since_days`: 1–60（默认 7；近 N 天并用于分页提前停止）
+  - 返回：NewsResponse（示例）
+```
+{
+  "status":"OK",
+  "news_list":[
+    {"title":"行业热点资讯…","url":"http://www.chinawuliu.com.cn/zixun/...","origin":"中国物流与采购联合会-资讯","summary":"摘要……","publish_date":"2025-09-19"}
+  ],
+  "err_code":null,
+  "err_info":null
+}
+```
+
+### ChinaISA（中国钢铁工业协会）
+
+- GET `/api/chinaisa/news`
+  - 用途：抓取指定栏目或默认 8 个栏目；支持递归抓取"统计发布/行业分析/价格指数"的子栏目
+  - 入参：
+    - `columns`: 栏目 ID（CSV）。如不传则抓取默认 8 个主栏目。
+    - `page`: 页号（默认 1）
+    - `size`: 每页条数（默认 20，1–100）
+    - `max`: 返回上限（默认 60）
+    - `since_days`: 近 N 天（可选）
+    - `max_pages`: 最大翻页（默认 3）
+    - `include_subtabs`: 是否包含子栏目（默认 true，仅对统计发布/行业分析/价格指数生效）
+  - 说明：不要在文档硬编码栏目 ID，请先调用 `/api/chinaisa/sections` 获取实时映射，然后将其中的 ID 传给本接口。
+  - 返回：NewsResponse
+
+- GET `/api/chinaisa/sections`
+  - 用途：返回主栏目 → 子栏目结构
+  - 入参：
+    - `include_subtabs`: 是否进行实时发现（默认 true）
+  - 返回字段：
+    - `sections`: 所有主栏目，含 `name`、`baseline_subtabs`（固化）与 `subtabs`（实时）及 `added/missing`
+    - `groups`: 仅包含三大主类（统计发布/行业分析/价格指数）的相同结构，便于前端渲染
+  - 注意：本 README 不展示任何实际栏目 ID，避免失效或误用。请以接口返回为准。
+
+
+
+## 设计与实现要点
+- 解析：BeautifulSoup + 针对性选择器，尽量稳健；必要时后备方案
+- HTTP：自定义 UA、超时与重试；可禁用系统代理并开启证书校验，避免被本机代理劫持
+- 统一模型：所有来源统一映射到 News/NewsResponse
+- 校验与快照：`gov_news/snapshots` 提供本地快照用于人工核验
+
+## 常见问题（FAQ）
+- Q: 返回为空/站点变动导致解析失败？
+  - A: 先缩小 `max_pages`/`max_items` 重试，必要时调整解析选择器。
+- Q: 如何指定报纸日期？
+  - A: `/api/get_daily_paper_news` 提供 `date=YYYY-MM-DD` 参数；若该期缺页会自动在最近 7 天内回退。
+- Q: 发改委栏目如何多选？
+  - A: `categories` 以逗号分隔传入，如 `ghxwj,gg`。
+
+## 许可与合规
+- 本项目仅用于学习与研究，请遵守目标站点 robots 与访问频率限制。
+>>>>>>> 129ab969faef3e50a363b109c271382f7fe42f70

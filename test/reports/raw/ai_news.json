@@ -1,0 +1,77 @@
+{
+  "news_list": [
+    {
+      "title": "1、美团全新推理大模型 LongCat-Flash-Thinking发布",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "美团推出的LongCat-Flash-Thinking模型凭借其强大的性能和灵活的架构，在多个领域表现出色，为AI应用开发提供了新的可能性。【AiBase提要:】🧠 LongCat-Flash-Thinking 是一款基于混合专家架构的大型推理模型，参数量高达5600亿，能动态激活186亿至313亿个参数。📊 在数学推理、通用推理和代码生成等任务中表现优异，甚至在某些测试中达到顶级准确率。🔧 模型权重已开源，并提供详细聊天模板和专属聊天网站，便于开发者使用和研究。详情链接:https://longcat.chat/",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "2、一图生动画，人物无缝替换！Wan-Animate开源引爆AI视频革命，阿里黑科技免费玩转？",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "Wan-Animate模型的开源发布标志着AI视频生成技术的重大突破，其双任务处理能力和多模态融合技术为视频创作带来了革命性的变化。【AiBase提要:】🎭 双任务一键搞定：Wan-Animate可同时解决角色动画生成和角色替换问题，用户只需提供一张图片和一段参考视频即可生成高精度动画视频。💡 多模态融合驱动：模型集成骨骼信号控制体动、面部隐式特征提取以及Relighting LoRA模块优化环境照明，提升唇同步精度和全身动作复刻效果。🚀 应用前景广阔：Wan-Animate在娱乐和商业场景中具有巨大潜力，如音乐视频创作、电商广告或企业培训，未来有望扩展到多人物视频支持。详情链接:https://github.com/Wan-Video/Wan2.2",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "3、字节跳动推出豆包翻译大模型：28种语言互译，比肩GPT-4o",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "字节跳动旗下火山引擎推出了全新的通用翻译大模型——豆包翻译模型，该模型支持28种语言的互译，并且性能已达到或超越市场领先的GPT-4o和Gemini-2.5-Pro等模型。此外，豆包翻译模型在价格方面也表现出色，每百万字符输入仅需1.20元，输出为3.60元。【AiBase提要:】🤖 豆包翻译模型支持28种语言互译，性能媲美GPT-4o和Gemini-2.5-Pro。💰 翻译价格极具竞争力，输入每百万字符仅需1.20元，输出为3.60元。🔗 定价信息可查阅火山引擎官方文档以获取详细信息。详情链接:https://www.volcengine.com/docs/82379/1820188",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "4、华为与浙大携手发布 DeepSeek-R1-Safe 大模型：AI安全与性能完美平衡",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "华为与浙江大学联合推出了国内首个基于昇腾千卡算力平台的基础大模型 DeepSeek-R1-Safe，该模型在 AI 安全和性能方面取得了显著突破，为未来 AI 产业生态协同发展提供了新的方向。【AiBase提要:】🧠 DeepSeek-R1-Safe 是基于昇腾千卡算力平台构建的，专注于解决 AI 领域的安全与性能问题。🛡️ 该模型在多个有害信息防御维度中表现出色，整体防御成功率接近 100%。🚀 在通用能力基准测试中，DeepSeek-R1-Safe 的性能损耗控制在 1% 以内，实现了安全与性能的平衡。",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "5、Qwen3-Omni 即将登场:端侧跨模态模型再升级",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "Qwen3-Omni 是阿里巴巴云 Qwen 团队推出的最新跨模态模型，预计即将正式发布。该模型已向 Hugging Face 的 Transformers 库提交了支持 PR，标志着其开源集成的实现。Qwen3-Omni 采用 Thinker-Talker 双轨设计，提升资源受限设备上的部署效率，并适用于实时交互场景。【AiBase提要:】🔥 Qwen3-Omni 是阿里巴巴云 Qwen 团队的最新跨模态模型，旨在提升多模态处理能力。💡 该模型采用 Thinker-Talker 双轨设计，确保高效流式处理，适用于实时交互场景。🚀 Qwen3-Omni 已向 Hugging Face 的 Transformers 库提交支持 PR，标志着开源集成的实现。",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "6、xAI发布Grok4Fast：计算量降低40%，单任务成本竟然降至98%！",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "xAI公司推出的Grok4Fast模型在计算量和运行成本上实现了重大突破，同时在性能测试中表现出色，为用户提供高效且经济的解决方案。【AiBase提要:】🧠 Grok4Fast的计算量减少了40%，提升了处理复杂任务的效率。💰 单任务运行成本降低了98%，为企业节省开支提供了机会。📊 在GPQA Diamond和AIME2025基准测试中表现优异，展现了强大的性能。",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "7、YouTube 推出全新工具与功能，助力创作者更上一层楼",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "YouTube 在年度活动上发布了多项新功能和工具，涵盖直播、货币化方式以及AI辅助创作等。这些更新旨在提升创作者的内容管理效率和观众互动体验。【AiBase提要:】🎥 新工作室功能：引入灵感标签、标题 A/B 测试和肖像识别等工具，助力创作者管理内容。🎮 直播升级：支持小游戏、横竖屏直播、AI 自动高亮功能，提升直播体验。💰 新货币化方式：通过品牌合作和购物计划，创作者可获取更多收益机会。",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "8、IBM 推出 Granite-Docling-258M 模型，助力文件转换技术新突破",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "IBM 发布了轻量级视觉语言 AI 模型 Granite-Docling-258M，专为文档处理设计。该模型在识别准确度、多语言支持和文档元素处理方面表现突出，能够保留原始文档的版面结构，并支持多种输出格式。【AiBase提要:】📄 轻量级模型：Granite-Docling-258M 专为文件转换设计，参数量为 2.58 亿。🔍 高准确度：相比传统 OCR 软件，该模型在识别准确度上有显著提升。🌍 多语言支持：目前支持中文、阿拉伯语和日语，未来将扩展更多语言。详情链接:https://huggingface.co/ibm-granite/granite-docling-258M",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "9、中科院推出类脑大模型 SpikingBrain:以2% 数据实现百倍速度突破",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "中科院推出的类脑大模型 SpikingBrain 在处理长文本时展现出惊人的速度和效率，其创新的架构和算法为人工智能领域带来了重大突破。【AiBase提要:】🧠 SpikingBrain 模型采用混合线性注意力架构，计算复杂度从二次方降至线性💡 自适应阈值脉冲神经元机制显著降低能耗，实现高计算稀疏度🚀 该模型在处理长文本时速度比主流模型快100倍，仅需2% 训练数据详情链接:https://github.com/BICLab/SpikingBrain-7B",
+      "publish_date": "2025-09-22"
+    },
+    {
+      "title": "10、OpenAI CEO透露将推计算密集型新功能，部分仅限Pro用户",
+      "url": "https://news.aibase.com/zh/daily/21468",
+      "origin": "Aibase",
+      "summary": "OpenAI首席执行官Sam Altman宣布，公司将在未来几周内推出一系列需要更多计算资源的新服务，初期将仅对Pro订阅用户开放，并可能收取额外费用。尽管如此，Altman表示OpenAI的目标是降低智能服务的成本，使其更广泛可用。【AiBase提要:】🚀 OpenAI将推出计算密集型新服务，初期仅限Pro用户使用。💰 新功能可能涉及额外费用，以应对高昂的计算成本。💡 Altman强调降低智能服务成本，提升可及性是长期目标。",
+      "publish_date": "2025-09-22"
+    }
+  ],
+  "status": "OK",
+  "err_code": null,
+  "err_info": null
+}

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>项目架构图与时序图</title>
+  <style>
+    :root { --bg:#ffffff; --fg:#222; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0f1117; --fg:#e5e7eb; } }
+    html, body { height: 100%; }
+    body { margin: 0; padding: 0 16px 48px; background: var(--bg); color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", Arial, sans-serif; }
+    header { position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 10; }
+    h1 { font-size: 20px; margin: 8px 0; }
+    .controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .box { max-width: 1200px; margin: 16px auto; }
+    .mermaid { background: #fff0; }
+    .card { border: 1px solid #e5e7eb22; border-radius: 8px; padding: 12px; margin: 16px 0; }
+    button, select { padding: 6px 10px; }
+    .row { display: flex; gap: 12px; align-items: center; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <header>
+      <h1>项目架构图与时序图（HTML 渲染）</h1>
+      <div class="controls">
+        <div class="row">
+          <label for="theme">主题:</label>
+          <select id="theme">
+            <option value="default">Default</option>
+            <option value="neutral">Neutral</option>
+            <option value="forest">Forest</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+        <div class="row">
+          <button id="rerender">重新渲染</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>架构图</h2>
+      <div id="arch" class="mermaid">
+flowchart LR
+  Client["客户端"] --> App["FastAPI 应用 (main.py)"]
+
+  %% 路由层
+  subgraph routers["路由层 (api/)"]
+    CCTVRouter["GET /api/get_daily_cctv_news"]
+    AIRouter["GET /api/get_daily_ai_news"]
+    PaperRouter["GET /api/get_daily_paper_news"]
+    NDRCRouter["GET /api/get_daily_ndrc_news"]
+    ACFICRouter["GET /api/get_acfic_policies"]
+    CFLPRouter["GET /api/get_cflp_news"]
+    ChinaISANews["GET /api/chinaisa/news"]
+    ChinaISASections["GET /api/chinaisa/sections"]
+  end
+  App --> CCTVRouter
+  App --> AIRouter
+  App --> PaperRouter
+  App --> NDRCRouter
+  App --> ACFICRouter
+  App --> CFLPRouter
+  App --> ChinaISANews
+  App --> ChinaISASections
+
+  %% 爬虫层
+  subgraph crawlers["爬虫层"]
+    CCTV["CCTVNewsCrawler"]
+    AI["AiNewsCrawler"]
+    PAPER["PaperNewsCrawler"]
+    NDRC["NDRCNewsCrawler"]
+    ACFIC["ACFICPolicyCrawler"]
+    CFLP["CFLPNewsCrawler"]
+    CHINAISA["ChinaISACrawler"]
+  end
+  CCTVRouter --> CCTV
+  AIRouter --> AI
+  PaperRouter --> PAPER
+  NDRCRouter --> NDRC
+  ACFICRouter --> ACFIC
+  CFLPRouter --> CFLP
+  ChinaISANews --> CHINAISA
+  ChinaISASections --> CHINAISA
+
+  %% 报纸来源
+  subgraph papers["纸媒来源"]
+    RM["人民日报 rmrb"]
+    GM["光明日报 gmrb"]
+    JJ["经济日报 jjrb"]
+    QI["求是 qiushi"]
+    XH["新华每日电讯 mrdx"]
+    JCKB["经济参考报 jjckb"]
+  end
+  PAPER --> RM
+  PAPER --> GM
+  PAPER --> JJ
+  PAPER --> QI
+  PAPER --> XH
+  PAPER --> JCKB
+
+  %% 工具
+  subgraph utils["工具"]
+    UT["utils.tool (UA/重试/解码)"]
+  end
+  CCTV --> UT
+  AI --> UT
+  PAPER --> UT
+  NDRC --> UT
+  ACFIC --> UT
+  CFLP --> UT
+  CHINAISA --> UT
+
+  %% 数据模型
+  subgraph models["数据模型"]
+    News["News (Pydantic)"]
+    Resp["NewsResponse"]
+  end
+  CCTV --> Resp
+  AI --> Resp
+  PAPER --> Resp
+  NDRC --> Resp
+  ACFIC --> Resp
+  CFLP --> Resp
+  CHINAISA --> Resp
+
+  %% 外部站点
+  subgraph extern["外部网站"]
+    CCTVWeb["央视新闻站点"]
+    Aibase["Aibase 日报"]
+    NDRCWeb["国家发改委官网"]
+    ACFICWeb["全国工商联官网"]
+    CFLPWeb["中国物流与采购网 (chinawuliu)"]
+    CHINAISAWeb["中钢协门户"]
+    Papers["各报纸官网"]
+  end
+  UT --> CCTVWeb
+  UT --> Aibase
+  UT --> Papers
+  UT --> NDRCWeb
+  UT --> ACFICWeb
+  UT --> CFLPWeb
+  UT --> CHINAISAWeb
+      </div>
+      <div class="row"><button data-export="arch">导出 SVG</button></div>
+    </section>
+
+    <section class="card">
+      <h2>Paper News 请求时序图</h2>
+      <div id="seq" class="mermaid">
+sequenceDiagram
+  participant C as 客户端
+  participant A as FastAPI 应用
+  participant R as 路由(Paper)
+  participant P as PaperNewsCrawler
+  participant S as 报纸源模块
+  participant U as utils.tool
+  participant W as 报纸网站
+
+  C->>A: GET /api/get_daily_paper_news?source=peopledaily
+  A->>R: 路由分发
+  R->>P: get_news()
+  P->>S: get_page_list / get_title_list / fetch_url
+  S->>U: fetch_url(url)
+  U->>W: HTTP GET
+  W-->>U: HTML
+  U-->>S: HTML
+  S-->>P: 标题/URL/正文/摘要
+  P-->>A: NewsResponse([...])
+  A-->>C: 200 OK + JSON
+      </div>
+      <div class="row"><button data-export="seq">导出 SVG</button></div>
+    </section>
+  </div>
+
+  <script>
+    (function(){
+      const urls = [
+        'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js',
+        'https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js'
+      ];
+      function load(i){
+        if (i >= urls.length) { document.body.insertAdjacentHTML('beforeend','<p>Mermaid 加载失败，请检查网络。</p>'); return; }
+        const s = document.createElement('script');
+        s.src = urls[i];
+        s.onload = ready; s.onerror = () => load(i+1);
+        document.head.appendChild(s);
+      }
+      function ready(){
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const themeSelect = document.getElementById('theme');
+        themeSelect.value = prefersDark ? 'dark' : 'default';
+        function init(theme){ mermaid.initialize({ startOnLoad: false, theme: theme || themeSelect.value, securityLevel: 'loose', flowchart: { htmlLabels: true, curve: 'linear' } }); }
+        async function render(){ try { if (mermaid.run) { await mermaid.run({ querySelector: '.mermaid' }); } else if (mermaid.init) { mermaid.init(undefined, document.querySelectorAll('.mermaid')); } } catch(e){ console.error(e); } }
+        init(); render();
+        document.getElementById('rerender').addEventListener('click', async ()=>{ init(themeSelect.value); render(); });
+        document.querySelectorAll('button[data-export]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-export');
+            const host = document.getElementById(id);
+            const svg = host.querySelector('svg');
+            if (!svg) { alert('请先渲染成功后再导出'); return; }
+            const serializer = new XMLSerializer();
+            let src = serializer.serializeToString(svg);
+            if (!src.startsWith('<?xml')) { src = '<?xml version="1.0" standalone="no"?>\n' + src; }
+            const blob = new Blob([src], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = id + '.svg'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 5000);
+          });
+        });
+      }
+      load(0);
+    })();
+  </script>
+
+  <div class="box">
+    <section class="card">
+      <h2>API 一览与示例（统一返回 NewsResponse）</h2>
+      <p>响应统一为 <code>NewsResponse</code>：<code>{ status: OK|EMPTY|ERROR, err_code, err_info, news_list: [{title,url,origin,summary,publish_date}] }</code></p>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_daily_cctv_news</code> — 新闻联播（前一日）</summary>
+        <ul>
+          <li>用途：抓取央视《新闻联播》前一日要闻</li>
+          <li>入参：无</li>
+          <li>示例：<code>/api/get_daily_cctv_news</code></li>
+          <li>提示：目标页偶尔改版，若为空请稍后重试</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_daily_ai_news</code> — Aibase 每日 AI</summary>
+        <ul>
+          <li>用途：抓取 Aibase 每日 AI 新闻（当天）</li>
+          <li>入参：无</li>
+          <li>示例：<code>/api/get_daily_ai_news</code></li>
+          <li>提示：当天如未更新，返回可能为空或较少</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_daily_paper_news</code> — 报纸新闻（可指定日期）</summary>
+        <ul>
+          <li>用途：从报纸官网抓取某期文章摘要</li>
+          <li>入参：
+            <ul>
+              <li><code>source</code>: <code>peopledaily|guangming|economic|qiushi|xinhua|jjckb</code>（默认 <code>peopledaily</code>）</li>
+              <li><code>max_items</code>: 1–50（默认 10）</li>
+              <li><code>date</code>: <code>YYYY-MM-DD</code>（可选，不填自动选择最近一期，最多回溯 7 天）</li>
+            </ul>
+          </li>
+          <li>示例：
+            <pre><code>/api/get_daily_paper_news?source=peopledaily&max_items=8
+/api/get_daily_paper_news?source=guangming&date=2025-09-18&max_items=5
+/api/get_daily_paper_news?source=xinhua&max_items=12
+/api/get_daily_paper_news?source=jjckb&max_items=6</code></pre>
+          </li>
+          <li>提示：个别期数缺页会自动回退；不同来源版式不同，条数可能有差异</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_daily_ndrc_news</code> — 国家发改委栏目</summary>
+        <ul>
+          <li>用途：聚合抓取所选分类</li>
+          <li>入参：
+            <ul>
+              <li><code>categories</code>: <code>fzggwl,ghxwj,ghwb,gg,tz</code>（CSV；默认 <code>fzggwl</code>）</li>
+              <li><code>max_pages</code>: 1–10（默认 1）</li>
+              <li><code>max_items</code>: 1–100（默认 10）</li>
+            </ul>
+          </li>
+          <li>示例：
+            <pre><code>/api/get_daily_ndrc_news?categories=ghxwj,gg&max_pages=1&max_items=12
+/api/get_daily_ndrc_news?categories=fzggwl&max_pages=2&max_items=20</code></pre>
+          </li>
+          <li>提示：详情页解析采用多种容器兜底，若摘要较短可增大 <code>max_pages</code></li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_acfic_policies</code> — 全国工商联政策</summary>
+        <ul>
+          <li>用途：中央/部委/地方/全联/解读</li>
+          <li>入参：
+            <ul>
+              <li><code>channels</code>: <code>zy,bw,df,qggsl,jd</code>（CSV；默认全选）</li>
+              <li><code>max_pages</code>: 1–10（默认 1）</li>
+              <li><code>max_items</code>: 1–100（默认 5）</li>
+            </ul>
+          </li>
+          <li>示例：
+            <pre><code>/api/get_acfic_policies?channels=zy,qggsl,jd&max_pages=1&max_items=8
+/api/get_acfic_policies?channels=bw,df&max_pages=2&max_items=15</code></pre>
+          </li>
+          <li>提示：部分栏目分页命名不一致，已统一适配为 <code>index_{n}.html</code> 形式</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/get_cflp_news</code> — 中物联 政策/资讯</summary>
+        <ul>
+          <li>用途：中国物流与采购联合会（中物联）</li>
+          <li>入参：
+            <ul>
+              <li><code>channels</code>: <code>zcfg</code>（政策法规）、<code>zixun</code>（资讯），CSV，默认 <code>zcfg,zixun</code></li>
+              <li><code>max_pages</code>: 1–10（默认 1）</li>
+              <li><code>max_items</code>: 1–100（默认 8）</li>
+              <li><code>since_days</code>: 1–60（默认 7；近 N 天且用于分页提前停止）</li>
+            </ul>
+          </li>
+          <li>示例：
+            <pre><code>/api/get_cflp_news?channels=zixun&max_pages=1&max_items=8&since_days=7
+/api/get_cflp_news?channels=zcfg&max_pages=2&max_items=8&since_days=60
+/api/get_cflp_news?channels=zcfg,zixun&max_pages=2&max_items=12&since_days=30</code></pre>
+          </li>
+          <li>提示：zcfg 若近 N 天内无新文可能返回空；已适配资讯新模板（<code>ul.list-box li</code>）</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/chinaisa/news</code> — 中国钢铁工业协会</summary>
+        <ul>
+          <li>用途：抓取指定栏目（支持三大类：统计发布/行业分析/价格指数 的子栏目递归）</li>
+          <li>入参：
+            <ul>
+              <li><code>columns</code>: 栏目 <code>columnId</code>（CSV，可为空使用默认 8 个）</li>
+              <li><code>page</code>: 1–50（默认 1）</li>
+              <li><code>size</code>: 1–100（默认 20）</li>
+              <li><code>max</code>: 1–1000（默认 60；返回上限）</li>
+              <li><code>since_days</code>: 1–60（可选）</li>
+              <li><code>max_pages</code>: 1–10（默认 3）</li>
+              <li><code>include_subtabs</code>: 是否包含子栏目（默认 true）</li>
+            </ul>
+          </li>
+          <li>示例：
+            <pre><code>/api/chinaisa/news?size=20&max=60&max_pages=3
+/api/chinaisa/news?columns=xxxx,yyyy&size=50&max=100&since_days=14
+/api/chinaisa/news?include_subtabs=false&page=1&size=30</code></pre>
+          </li>
+          <li>提示：不要硬编码栏目 ID，先调用 <code>/api/chinaisa/sections</code> 获取实时映射</li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><strong>GET</strong> <code>/api/chinaisa/sections</code> — 栏目与子栏目映射</summary>
+        <ul>
+          <li>用途：返回主栏目 → 子栏目结构，以及三大主类的分组视图</li>
+          <li>入参：<code>include_subtabs</code>（是否实时发现，默认 true）</li>
+          <li>示例：<code>/api/chinaisa/sections</code>、<code>/api/chinaisa/sections?include_subtabs=false</code></li>
+        </ul>
+      </details>
+
+      <h3>通用说明</h3>
+      <ul>
+        <li>频控与重试：HTTP 采用自定义 UA、可禁用系统代理、带超时与重试；编码优先 <code>meta</code> → <code>apparent</code> → <code>header</code> → <code>utf-8/gb18030</code> 并以替换符最少为准</li>
+        <li>错误语义：<code>EMPTY</code> 表示解析成功但无数据；<code>ERROR</code> 表示过程异常（详见 <code>err_code/err_info</code>）</li>
+        <li>稳定性建议：逐步放大 <code>max_pages</code>/<code>max_items</code>；必要时增大 <code>since_days</code></li>
+        <li>演示接口文档：运行 <code>uvicorn main:app --reload</code> 后访问 <code>/docs</code> 或 <code>/redoc</code></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

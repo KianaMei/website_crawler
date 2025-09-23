@@ -8,7 +8,8 @@ from api.param_parsers import parse_multi_select
 # Crawlers from both codebases
 from gov_news.ndrc_news_crawler import NDRCNewsCrawler
 from gov_news.transport_news_crawler import TransportNewsCrawler
-from gov_news.commerce_news_crawler import CommerceNewsCrawler
+# Delay importing CommerceNewsCrawler to avoid optional dependency (playwright)
+# at app import time. We import it inside the route handler when needed.
 
 
 gov_news_router = APIRouter()
@@ -81,6 +82,8 @@ async def get_transport_gov_news() -> NewsResponse:
 )
 async def get_commerce_gov_news() -> NewsResponse:
     try:
+        # Local import to avoid hard dependency during app startup
+        from gov_news.commerce_news_crawler import CommerceNewsCrawler
         url = r'https://www.mofcom.gov.cn/'
         commerce_gov_news_crawler = CommerceNewsCrawler(url=url)
         return commerce_gov_news_crawler.get_news()
