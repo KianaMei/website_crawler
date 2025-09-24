@@ -6,7 +6,7 @@
 - Aibase AI 每日资讯
 - 纸媒要闻：人民日报/光明日报/经济日报/求是/新华每日电讯/经济参考报
 - 政府要闻：国家发展改革委/交通运输部/商务部
-- 行业协会/商会：全国工商联（ACFIC）/中国物流与采购联合会（CFLP）/中国信息安全认证中心（ChinaISA）
+- 行业协会/商会：全国工商联（ACFIC）/中国物流与采购联合会（CFLP）/中国钢铁工业协会（ChinaISA）
 
 
 ## 环境与安装
@@ -113,7 +113,7 @@
     - `curl "http://127.0.0.1:8000/api/get_cflp_news?channels=zcfg,zixun&since_days=7&max_items=8"`
 
 - GET `/api/chinaisa/news`
-  - 作用：抓取 ChinaISA 指定栏目（支持子页签统计/行业信息/价格指数等）
+  - 作用：抓取中国钢铁工业协会（ChinaISA）指定栏目（支持子页签统计/行业信息/价格指数等）
   - 参数：
     - `columns`: 栏目 columnId CSV；留空使用内建默认集合
     - `page`: 1–50（默认 1）
@@ -126,7 +126,7 @@
     - `curl "http://127.0.0.1:8000/api/chinaisa/news?page=1&size=10&max=20&max_pages=2&include_subtabs=true"`
 
 - GET `/api/chinaisa/sections`
-  - 作用：返回 ChinaISA 栏目结构映射；包含 baseline_subtabs 与实时抓取结果对比
+  - 作用：返回中国钢铁工业协会（ChinaISA）栏目结构映射；包含 baseline_subtabs 与实时抓取结果对比
   - 参数：
     - `include_subtabs`: 是否包含子页签（默认 true）
   - 示例：
