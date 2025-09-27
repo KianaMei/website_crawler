@@ -139,16 +139,28 @@ def handler(args: Args[Input]) -> Output:
                         break
             elif src == 'jjckb':
                 y, m, d = _find_available_date(_jjckb_get_page_list, date_str)
+                ad_count = 0  # 记录过滤的广告数量
                 for page_url, _ in _jjckb_get_page_list(y, m, d):
                     for url in _jjckb_get_title_list(y, m, d, page_url):
                         if per_count >= max_items:
                             break
                         html = _fetch_url(url)
                         _, _, title, body, summary = _jjckb_parse_article(html)
-                        news_list.append(News(title=title or '', url=url, origin=ORIGIN_MAP[src], summary=summary or body or '', publish_date=f"{y}-{m}-{d}"))
-                        per_count += 1
+                        
+                        # 广告过滤检查
+                        if _jjckb_is_advertisement(title or '', body or ''):
+                            ad_count += 1
+                            logger.info(f"过滤广告内容: {title} (正文长度: {len(body or '')})")
+                            continue
+                        
+                        # 只保留非广告内容
+                        if title or body:  # 确保有实际内容
+                            news_list.append(News(title=title or '', url=url, origin=ORIGIN_MAP[src], summary=summary or body or '', publish_date=f"{y}-{m}-{d}"))
+                            per_count += 1
                     if per_count >= max_items:
                         break
+                if ad_count > 0:
+                    logger.info(f"jjckb共过滤掉 {ad_count} 条广告内容")
             elif src == 'qiushi':
                 part = _qiushi_collect(date_str, max_items, ORIGIN_MAP[src])
                 news_list.extend(part[:max_items])
@@ -901,6 +913,46 @@ def _jjckb_get_title_list(year: str, month: str, day: str, page_url: str):
             seen.add(absu)
             links.append(absu)
     return links
+
+
+def _jjckb_is_advertisement(title: str, body: str) -> bool:
+    """检测是否为广告内容"""
+    if not title or not body:
+        return True
+    
+    # 1. 标题过短且正文很少（典型广告特征）
+    if len(title) <= 8 and len(body) <= 50:
+        return True
+    
+    # 2. 标题只包含公司名等广告关键词
+    ad_patterns = [
+        r'^[\w\s]*(?:科技|电子|有限公司|股份|集团|企业|公司)[\w\s]*$',  # 公司名格式
+        r'^[\w\s]*(?:招聘|诚聘|招募)[\w\s]*$',  # 招聘广告  
+        r'^[\w\s]*(?:转让|出售|求购|合作)[\w\s]*$',  # 交易广告
+        r'^[\w\s]*(?:声明|启事|通告|公告)[\w\s]*$',  # 各种公告
+    ]
+    
+    for pattern in ad_patterns:
+        if re.match(pattern, title.strip()):
+            # 如果匹配广告模式且正文很短，判定为广告
+            if len(body) <= 200:
+                return True
+    
+    # 3. 正文内容质量检测
+    if len(body) > 0:
+        # 计算中文字符比例
+        chinese_chars = len(re.findall(r'[\u4e00-\u9fff]', body))
+        if chinese_chars < 20:  # 中文字符太少
+            return True
+        
+        # 检测是否包含实质性新闻内容
+        news_keywords = ['报道', '记者', '消息', '新闻', '据悉', '了解到', '表示', '认为', '指出', '强调', '透露']
+        if not any(keyword in body for keyword in news_keywords):
+            # 没有新闻关键词且内容很短
+            if len(body) <= 100:
+                return True
+    
+    return False
 
 
 def _jjckb_parse_article(html: str):

@@ -31,7 +31,7 @@ class News(BaseModel):
 
 
 class PaperInput(BaseModel):
-    max_items: int = Field(default=10, ge=1, le=50, description="最多抓取条数")
+    max_items: Optional[int] = Field(default=None, description="最大抓取条数，None 表示不限制")
     since_days: int = Field(default=3, ge=1, le=365, description="近 N 天窗口")
     date: Optional[str] = Field(default=None, description="指定日期（YYYY-MM-DD）")
 
@@ -52,11 +52,25 @@ def safe_handler(origin_name: str):
             # 容忍缺失的 args.input 或字段
             inp_obj = getattr(args, "input", None)
             if isinstance(inp_obj, dict):
-                max_items = int(inp_obj.get("max_items") or 10)
+                raw_max = inp_obj.get("max_items")
                 date_str = inp_obj.get("date")
             else:
-                max_items = int((getattr(inp_obj, "max_items", None) or 10))
+                raw_max = getattr(inp_obj, "max_items", None)
                 date_str = getattr(inp_obj, "date", None)
+
+            def _to_max(m):
+                try:
+                    if m is None:
+                        return None
+                    ms = str(m).strip().lower()
+                    if ms in ("", "none", "null"):
+                        return None
+                    v = int(m)
+                    return v if v > 0 else None
+                except Exception:
+                    return None
+
+            max_items = _to_max(raw_max)
             
             try:
                 return handler_func(args, max_items, date_str, origin_name, logger)
@@ -209,7 +223,7 @@ def get_article_list(issue_url: str):
     return art_links
 
 
-def collect_qiushi_news(date: Optional[str], max_items: int, origin: str) -> List[News]:
+def collect_qiushi_news(date: Optional[str], max_items: Optional[int], origin: str) -> List[News]:
     """收集求是新闻"""
     # 选择期刊
     chosen = None
@@ -272,13 +286,13 @@ def collect_qiushi_news(date: Optional[str], max_items: int, origin: str) -> Lis
                     body = '\n'.join(ps)
                     break
         out.append(News(title=title or '', url=url, origin=origin, summary=body or '', publish_date=date_str))
-        if len(out) >= max_items:
+        if max_items is not None and len(out) >= max_items:
             break
     return out
 
 
 @safe_handler("求是")
-def handler(args: Args[PaperInput], max_items: int, date_str: str, origin_name: str, logger) -> PaperOutput:
+def handler(args: Args[PaperInput], max_items: Optional[int], date_str: str, origin_name: str, logger) -> PaperOutput:
     """求是新闻抓取处理函数"""
     news_list = collect_qiushi_news(date_str, max_items, origin_name)
     

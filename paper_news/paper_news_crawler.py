@@ -191,6 +191,7 @@ class PaperNewsCrawler:
                 y, m, d = self._find_available_date(mod_jjckb.get_page_list)
                 pages = mod_jjckb.get_page_list(y, m, d)
                 news_list: List[News] = []
+                ad_count = 0  # 记录过滤的广告数量
                 for page_url, _ in pages:
                     if len(news_list) >= self.max_items:
                         break
@@ -200,7 +201,20 @@ class PaperNewsCrawler:
                             break
                         html = mod_jjckb.fetch_url(url)
                         _, _, title, content_body, summary = mod_jjckb.parse_article(html)
-                        news_list.append(self._build_news(title, url, origin, summary or content_body, f"{y}-{m}-{d}"))
+                        
+                        # 广告过滤检查
+                        if mod_jjckb.is_advertisement(title or '', content_body or ''):
+                            ad_count += 1
+                            print(f"[jjckb_crawler] 过滤广告内容: {title} (正文长度: {len(content_body or '')})", flush=True)
+                            continue
+                        
+                        # 只保留非广告内容
+                        if title or content_body:  # 确保有实际内容
+                            news_list.append(self._build_news(title, url, origin, summary or content_body, f"{y}-{m}-{d}"))
+                
+                if ad_count > 0:
+                    print(f"[jjckb_crawler] 共过滤掉 {ad_count} 条广告内容", flush=True)
+                
                 return NewsResponse(news_list=news_list)
 
             return NewsResponse(news_list=None, status='ERROR', err_code='NOT_IMPLEMENTED', err_info='Unknown source handler')

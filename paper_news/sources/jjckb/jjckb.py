@@ -143,6 +143,46 @@ def get_title_list(year: str, month: str, day: str, page_url: str, base_url: str
     return links
 
 
+def is_advertisement(title: str, body: str) -> bool:
+    """检测是否为广告内容"""
+    if not title or not body:
+        return True
+    
+    # 1. 标题过短且正文很少（典型广告特征）
+    if len(title) <= 8 and len(body) <= 50:
+        return True
+    
+    # 2. 标题只包含公司名等广告关键词
+    ad_patterns = [
+        r'^[\w\s]*(?:科技|电子|有限公司|股份|集团|企业|公司)[\w\s]*$',  # 公司名格式
+        r'^[\w\s]*(?:招聘|诚聘|招募)[\w\s]*$',  # 招聘广告  
+        r'^[\w\s]*(?:转让|出售|求购|合作)[\w\s]*$',  # 交易广告
+        r'^[\w\s]*(?:声明|启事|通告|公告)[\w\s]*$',  # 各种公告
+    ]
+    
+    for pattern in ad_patterns:
+        if re.match(pattern, title.strip()):
+            # 如果匹配广告模式且正文很短，判定为广告
+            if len(body) <= 200:
+                return True
+    
+    # 3. 正文内容质量检测
+    if len(body) > 0:
+        # 计算中文字符比例
+        chinese_chars = len(re.findall(r'[\u4e00-\u9fff]', body))
+        if chinese_chars < 20:  # 中文字符太少
+            return True
+        
+        # 检测是否包含实质性新闻内容
+        news_keywords = ['报道', '记者', '消息', '新闻', '据悉', '了解到', '表示', '认为', '指出', '强调', '透露']
+        if not any(keyword in body for keyword in news_keywords):
+            # 没有新闻关键词且内容很短
+            if len(body) <= 100:
+                return True
+    
+    return False
+
+
 def parse_article(html: str):
     """解析文章内容，返回 (content_full, title_valid, title, body, summary)。"""
     soup = BeautifulSoup(html, 'html.parser')

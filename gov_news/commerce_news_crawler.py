@@ -20,8 +20,16 @@ class CommerceNewsCrawler:
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()
+            # 设置较为保守的默认超时，避免长时间等待导致“卡住”
             try:
-                await page.goto(url, wait_until="networkidle")
+                page.set_default_timeout(15000)
+                page.set_default_navigation_timeout(15000)
+            except Exception:
+                pass
+            try:
+                # 部分网站长时间保活网络连接，使用 networkidle 可能无法达成空闲状态
+                # 调整为 domcontentloaded 更稳妥
+                await page.goto(url, wait_until="domcontentloaded")
                 ul_selector = "ul.txtList_01"
                 await page.wait_for_selector(ul_selector, timeout=10000)
                 li_selector = f"{ul_selector} > li"
@@ -50,9 +58,12 @@ class CommerceNewsCrawler:
     async def get_news(self) -> NewsResponse:
         ldrhd_task = self.get_news_url_dict(child_url=r'xwfb/ldrhd/index.html')
         bldhd_task = self.get_news_url_dict(child_url=r'xwfb/bldhd/index.html')
-        results = await asyncio.gather(ldrhd_task, bldhd_task)
+        results = await asyncio.gather(ldrhd_task, bldhd_task, return_exceptions=True)
         
-        merged = {**results[0], **results[1]}
+        merged = {}
+        for res in results:
+            if isinstance(res, dict):
+                merged.update(res)
         news_lst = []
         for title, url in merged.items():
             # 使用现有同步方法获取HTML，因为API路由是async，但get_html_from_url是sync
