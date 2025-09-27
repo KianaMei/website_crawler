@@ -1,0 +1,229 @@
+[2025-09-27 19:05:04] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:05:06] WARM GET https://index.mysteel.com/
+[2025-09-27 19:05:06] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:05:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E4%B8%8A%E6%B5%B7%3A15278%2C%E6%9D%AD%E5%B7%9E%3A15372&spec=HRB400E_20MM&callback=json&v=1758971107060
+[2025-09-27 19:05:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758971107060 sign=BD5FC610...
+[2025-09-27 19:05:07] RESP status=200 len=29
+[2025-09-27 19:05:07] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:05:07] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:05:07] SINGLE-CITY FETCH 上海:15278
+[2025-09-27 19:05:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E4%B8%8A%E6%B5%B7%3A15278&spec=HRB400E_20MM&callback=json&v=1758971107060
+[2025-09-27 19:05:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758971107178 sign=0DC2EC83...
+[2025-09-27 19:05:07] RESP status=200 len=29
+[2025-09-27 19:05:07] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:05:07] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:05:07] SINGLE-CITY FETCH 杭州:15372
+[2025-09-27 19:05:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E6%9D%AD%E5%B7%9E%3A15372&spec=HRB400E_20MM&callback=json&v=1758971107060
+[2025-09-27 19:05:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758971107443 sign=D4BFC10F...
+[2025-09-27 19:05:07] RESP status=200 len=29
+[2025-09-27 19:05:07] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:05:07] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:28:57] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:28:58] WARM GET https://index.mysteel.com/
+[2025-09-27 19:28:58] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:28:58] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E+20MM&callback=json&v=1758972538973
+[2025-09-27 19:28:58] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972538973 sign=41BDB099...
+[2025-09-27 19:28:59] RESP status=200 len=29
+[2025-09-27 19:28:59] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:28:59] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:28:59] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 19:28:59] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E+20MM&callback=json&v=1758972538973
+[2025-09-27 19:28:59] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972539028 sign=4E648451...
+[2025-09-27 19:28:59] RESP status=200 len=29
+[2025-09-27 19:28:59] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:28:59] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:29:45] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:29:45] WARM GET https://index.mysteel.com/
+[2025-09-27 19:29:45] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:29:45] spec-map: breed block not found for 螺纹钢
+[2025-09-27 19:29:45] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E+20MM&callback=json&v=1758972585375
+[2025-09-27 19:29:45] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972585375 sign=8B1D7F76...
+[2025-09-27 19:29:45] RESP status=200 len=29
+[2025-09-27 19:29:45] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:29:45] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:29:45] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 19:29:45] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E+20MM&callback=json&v=1758972585375
+[2025-09-27 19:29:45] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972585429 sign=BC6BBA30...
+[2025-09-27 19:29:45] RESP status=200 len=29
+[2025-09-27 19:29:45] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:29:45] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:30:19] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:30:19] WARM GET https://index.mysteel.com/
+[2025-09-27 19:30:19] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:30:19] spec-map: matched 'HRB400E 20MM' -> 'HRB400E_桅20' (global)
+[2025-09-27 19:30:19] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%E6%A1%8520&callback=json&v=1758972619455
+[2025-09-27 19:30:19] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972619456 sign=F61773A2...
+[2025-09-27 19:30:19] RESP status=200 len=29
+[2025-09-27 19:30:19] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:30:19] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:30:19] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 19:30:19] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%E6%A1%8520&callback=json&v=1758972619455
+[2025-09-27 19:30:19] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972619505 sign=CEE5EFC4...
+[2025-09-27 19:30:19] RESP status=200 len=29
+[2025-09-27 19:30:19] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:30:19] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:31:03] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:31:04] WARM GET https://index.mysteel.com/
+[2025-09-27 19:31:04] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:31:04] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 19:31:04] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972664215
+[2025-09-27 19:31:04] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972664215 sign=8A9E5A45...
+[2025-09-27 19:31:04] RESP status=200 len=29
+[2025-09-27 19:31:04] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:31:04] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:31:04] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 19:31:04] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972664215
+[2025-09-27 19:31:04] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972664274 sign=22CBCA80...
+[2025-09-27 19:31:04] RESP status=200 len=29
+[2025-09-27 19:31:04] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 19:31:04] RESP parsed message=系统异常 data_len=0
+[2025-09-27 19:32:07] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:32:07] WARM GET https://index.mysteel.com/
+[2025-09-27 19:32:07] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:32:07] extra cookies applied
+[2025-09-27 19:32:07] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 19:32:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972727689
+[2025-09-27 19:32:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972428641 sign=FA6C6D2F...
+[2025-09-27 19:41:38] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:41:38] WARM GET https://index.mysteel.com/
+[2025-09-27 19:41:38] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:41:38] extra cookies applied
+[2025-09-27 19:41:38] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 19:41:38] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972428641&startTime=2025-08-29&endTime=2025-09-27
+[2025-09-27 19:41:38] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972428641 sign=FA6C6D2F...
+[2025-09-27 19:42:31] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 19:42:31] WARM GET https://index.mysteel.com/
+[2025-09-27 19:42:31] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 19:42:31] extra cookies applied
+[2025-09-27 19:42:31] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 19:42:31] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972428641&startTime=2025-08-29&endTime=2025-09-27
+[2025-09-27 19:42:31] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972428641 sign=FA6C6D2F...
+[2025-09-27 19:42:31] RESP status=200 len=50
+[2025-09-27 19:42:31] RESP body.head={"code":401,"message":"签名时间戳已经超过5分钟!","data":null}
+[2025-09-27 19:42:31] RESP parsed message=签名时间戳已经超过5分钟! data_len=0
+[2025-09-27 19:42:31] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 19:42:31] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758972428641&startTime=2025-08-29&endTime=2025-09-27
+[2025-09-27 19:42:31] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758972428641 sign=FA6C6D2F...
+[2025-09-27 19:42:31] RESP status=200 len=50
+[2025-09-27 19:42:31] RESP body.head={"code":401,"message":"签名时间戳已经超过5分钟!","data":null}
+[2025-09-27 19:42:31] RESP parsed message=签名时间戳已经超过5分钟! data_len=0
+[2025-09-27 20:01:43] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:01:50] WARM GET https://index.mysteel.com/
+[2025-09-27 20:01:50] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:01:50] browser-warm: launching Edge
+[2025-09-27 20:02:05] browser-warm: injected cookies=22
+[2025-09-27 20:02:07] browser-warm ok=True
+[2025-09-27 20:02:07] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 20:02:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758974527839
+[2025-09-27 20:02:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758974527840 sign=8569D7FF...
+[2025-09-27 20:02:07] RESP status=200 len=29
+[2025-09-27 20:02:07] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:02:07] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:02:07] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 20:02:07] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758974527839
+[2025-09-27 20:02:07] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758974527914 sign=2FA45170...
+[2025-09-27 20:02:07] RESP status=200 len=29
+[2025-09-27 20:02:07] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:02:07] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:06:16] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:06:17] WARM GET https://index.mysteel.com/
+[2025-09-27 20:06:17] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:06:17] browser-warm: launching Edge
+[2025-09-27 20:06:34] browser-warm: injected cookies=22 expected_present=['WM_NI', 'WM_NIKE', 'WM_TID', 'gdxidpyhxdE']
+[2025-09-27 20:06:36] browser-warm ok=True
+[2025-09-27 20:06:36] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 20:06:36] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758974796985
+[2025-09-27 20:06:36] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758974796986 sign=8830105A...
+[2025-09-27 20:06:37] RESP status=200 len=29
+[2025-09-27 20:06:37] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:06:37] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:06:37] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 20:06:37] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758974796985
+[2025-09-27 20:06:37] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758974797060 sign=03D6CC18...
+[2025-09-27 20:06:37] RESP status=200 len=29
+[2025-09-27 20:06:37] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:06:37] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:10:19] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:10:19] WARM GET https://index.mysteel.com/
+[2025-09-27 20:10:19] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:10:19] browser-warm: launching Chrome
+[2025-09-27 20:10:50] browser-warm: injected cookies=22 expected_present=['WM_NI', 'WM_NIKE', 'WM_TID', 'gdxidpyhxdE']
+[2025-09-27 20:10:52] browser-warm ok=True
+[2025-09-27 20:10:52] spec-map: no match for spec 'HRB400E_20MM' (global)
+[2025-09-27 20:10:52] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E4%B8%8A%E6%B5%B7%3A15278&spec=HRB400E_20MM_%3A_HRB400E_20MM&callback=json&v=1758975052282
+[2025-09-27 20:10:52] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758975052282 sign=A33AC23F...
+[2025-09-27 20:10:52] RESP status=200 len=29
+[2025-09-27 20:10:52] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:10:52] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:32:12] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:32:14] WARM GET https://index.mysteel.com/
+[2025-09-27 20:32:15] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:32:15] browser-warm: launching Edge
+[2025-09-27 20:32:34] browser-warm: injected cookies=22 expected_present=['WM_NI', 'WM_NIKE', 'WM_TID', 'gdxidpyhxdE']
+[2025-09-27 20:32:36] browser-warm ok=True
+[2025-09-27 20:32:36] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 20:32:36] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758976356437
+[2025-09-27 20:32:36] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758976356437 sign=D9987B69...
+[2025-09-27 20:32:36] RESP status=200 len=29
+[2025-09-27 20:32:36] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:32:36] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:32:36] browser-fetch: trying multi-city
+[2025-09-27 20:32:36] browser-fetch: launching Edge
+[2025-09-27 20:33:04] browser-fetch result keys=[]
+[2025-09-27 20:33:04] browser-fetch single 南京:15407
+[2025-09-27 20:33:04] browser-fetch: launching Edge
+[2025-09-27 20:33:33] browser-fetch result keys=[]
+[2025-09-27 20:33:33] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 20:33:33] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758976356437
+[2025-09-27 20:33:33] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758976413540 sign=4DB1897D...
+[2025-09-27 20:33:33] RESP status=200 len=29
+[2025-09-27 20:33:33] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:33:33] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:37:48] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:37:49] WARM GET https://index.mysteel.com/
+[2025-09-27 20:37:49] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:37:49] browser-warm: launching Edge
+[2025-09-27 20:38:09] browser-warm: injected cookies=22 expected_present=['WM_NI', 'WM_NIKE', 'WM_TID', 'gdxidpyhxdE']
+[2025-09-27 20:38:11] browser-warm ok=True
+[2025-09-27 20:38:11] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 20:38:11] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758976691468
+[2025-09-27 20:38:11] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758976691468 sign=841EAB7E...
+[2025-09-27 20:38:11] RESP status=200 len=29
+[2025-09-27 20:38:11] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:38:11] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:38:11] browser-fetch: trying multi-city
+[2025-09-27 20:38:11] browser-fetch: launching Edge
+[2025-09-27 20:38:43] browser-fetch result keys=[]
+[2025-09-27 20:38:43] browser-fetch single 南京:15407
+[2025-09-27 20:38:43] browser-fetch: launching Edge
+[2025-09-27 20:39:14] browser-fetch result keys=[]
+[2025-09-27 20:39:14] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 20:39:14] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758976691468
+[2025-09-27 20:39:14] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758976754827 sign=6EA7E881...
+[2025-09-27 20:39:14] RESP status=200 len=29
+[2025-09-27 20:39:14] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:39:14] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:45:14] WARM GET https://index.mysteel.com/price/getChartMultiCity_1_0.html
+[2025-09-27 20:45:15] WARM GET https://index.mysteel.com/
+[2025-09-27 20:45:16] WARM GET https://index.mysteel.com/favicon.ico
+[2025-09-27 20:45:16] browser-warm: launching Edge
+[2025-09-27 20:45:38] browser-warm: injected cookies=22 expected_present=['WM_NI', 'WM_NIKE', 'WM_TID', 'gdxidpyhxdE']
+[2025-09-27 20:45:40] browser-warm ok=True
+[2025-09-27 20:45:40] spec-map: override 'HRB400E 20MM' -> 'HRB400E_Φ20'
+[2025-09-27 20:45:40] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758977140442
+[2025-09-27 20:45:40] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758977140442 sign=5379140A...
+[2025-09-27 20:45:40] RESP status=200 len=29
+[2025-09-27 20:45:40] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:45:40] RESP parsed message=系统异常 data_len=0
+[2025-09-27 20:45:40] browser-fetch: trying multi-city
+[2025-09-27 20:45:40] browser-fetch: launching Edge
+[2025-09-27 20:46:16] browser-fetch result keys=[]
+[2025-09-27 20:46:16] browser-fetch single 南京:15407
+[2025-09-27 20:46:16] browser-fetch: launching Edge
+[2025-09-27 20:46:52] browser-fetch result keys=[]
+[2025-09-27 20:46:52] SINGLE-CITY FETCH 南京:15407
+[2025-09-27 20:46:52] API GET https://index.mysteel.com/zs/newprice/getBaiduChartMultiCity.ms?catalog=%E8%9E%BA%E7%BA%B9%E9%92%A2_%3A_%E8%9E%BA%E7%BA%B9%E9%92%A2&city=%E5%8D%97%E4%BA%AC%3A15407&spec=HRB400E+20MM_%3A_HRB400E_%CE%A620&callback=json&v=1758977140442
+[2025-09-27 20:46:52] HEADERS version=1.0.0 appKey=47EE3F12CF0C443F8FD51EFDA73AC815 ts=1758977212798 sign=95AE4604...
+[2025-09-27 20:46:52] RESP status=200 len=29
+[2025-09-27 20:46:52] RESP body.head={"code":500,"message":"系统异常"}
+[2025-09-27 20:46:52] RESP parsed message=系统异常 data_len=0
